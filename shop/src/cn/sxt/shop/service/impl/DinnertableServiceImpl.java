@@ -72,6 +72,20 @@ public class DinnertableServiceImpl implements DinnertableService {
 		
 		return dao.updateStatus(table);
 	}
+
+
+	@Override
+	public List<Dinnertable> getAllByPage(Integer currentPage, Integer maxResult) {
+		// TODO Auto-generated method stub
+		return dao.getAllByPage(currentPage, maxResult);
+	}
+
+
+	@Override
+	public Integer getTotalCount() {
+		// TODO Auto-generated method stub
+		return dao.getTotalCount();
+	}
 	
 	
 

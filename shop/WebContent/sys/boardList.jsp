@@ -86,6 +86,24 @@
    <!-- 其他功能超链接 -->
 	<div id="TableTail" align="center">
 		<div class="FunctionButton"><a href="${pageContext.request.contextPath}/sys/table/addTable.jsp">添加</a></div>
+				当前 ${currentPage} 页    &nbsp;&nbsp; 总页数 ${totalPage} &nbsp;&nbsp;
+			<a href="${pageContext.request.contextPath }/BoardTableServlet?method=boardList&page=1">首页</a>
+			
+		<c:if test="${currentPage== 1}">
+			上一页
+		</c:if>	
+		<c:if test="${currentPage > 1}">
+			<a href="${pageContext.request.contextPath }/BoardTableServlet?method=boardList&page=${currentPage-1}">上一页 </a>
+		</c:if>	
+	
+	<c:if test="${currentPage== totalPage}">
+		下一页
+	</c:if>		
+	
+	<c:if test="${currentPage!= totalPage}">
+			<a href="${pageContext.request.contextPath }/BoardTableServlet?method=boardList&page=${currentPage+1}">下一页 </a>
+	</c:if>			
+			<a href="${pageContext.request.contextPath }/BoardTableServlet?method=boardList&page=${totalPage}">末页</a>
     </div> 
 </div>
 </body>

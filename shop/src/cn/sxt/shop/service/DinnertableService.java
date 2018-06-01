@@ -53,4 +53,19 @@ public interface DinnertableService {
 	 * @return
 	 */
 	public int updateStatus(Dinnertable table);	
+	
+	/**
+	 * 
+	 * @param currentPage 当前页
+	 * @param maxResult   每页显示最大总条数
+	 * 分页 查询所有的餐桌信息
+	 * @return   餐桌List集合
+	 */
+	public List<Dinnertable> getAllByPage(Integer currentPage,Integer maxResult);	
+	
+	/**
+	 * 获取总条数
+	 * @return
+	 */
+	public Integer getTotalCount();	
 }

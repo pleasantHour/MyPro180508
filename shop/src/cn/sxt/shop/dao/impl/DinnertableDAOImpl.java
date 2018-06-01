@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import cn.sxt.shop.entity.Dinnertable;
 import cn.sxt.shop.utils.ComPoolUtil;
@@ -108,5 +109,35 @@ public class DinnertableDAOImpl implements cn.sxt.shop.dao.DinnertableDAO {
 			throw new RuntimeException(e);
 		}
 		return table;
+	}
+
+	@Override
+	public List<Dinnertable> getAllByPage(Integer currentPage, Integer maxResult) {
+		List<Dinnertable> dinnerTables = null;
+		try {
+			dinnerTables = ComPoolUtil.getQueryRunner().query(
+					"select  * from dinnertable limit ?,?",
+					new BeanListHandler<Dinnertable>(Dinnertable.class),
+					new Object[]{(currentPage-1)*maxResult,maxResult});
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dinnerTables;
+	}
+
+	@Override
+	public Integer getTotalCount() {
+		// TODO Auto-generated method stub
+		Long count = 0l;//总条数
+
+		try {
+			count = ComPoolUtil.getQueryRunner().query(
+					"select count(*) from dinnertable",
+					new ScalarHandler<Long>());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return count.intValue();
 	}
 }

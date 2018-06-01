@@ -18,14 +18,14 @@ import cn.sxt.shop.web.base.BaseServlet;
  */
 public class BoardTableServlet extends BaseServlet {
 
-	/**
-	 * 显示餐桌列表页面
-	 */
-	public Object boardList(HttpServletRequest request, HttpServletResponse response){
-		//数据查询所有餐桌列表的信息
-		request.setAttribute("tableList", tableService.getAll());
-		return request.getRequestDispatcher("/sys/boardList.jsp");//转发
-	}
+//	/**
+//	 * 显示餐桌列表页面
+//	 */
+//	public Object boardList(HttpServletRequest request, HttpServletResponse response){
+//		//数据查询所有餐桌列表的信息
+//		request.setAttribute("tableList", tableService.getAll());
+//		return request.getRequestDispatcher("/sys/boardList.jsp");//转发
+//	}
 	
 	/**
 	 * 根据搜索的条件，显示餐桌列表页面
@@ -108,6 +108,49 @@ public class BoardTableServlet extends BaseServlet {
 		
 		//跳转餐桌列表
 		this.list(request,response);
+		return request.getRequestDispatcher("/sys/boardList.jsp");//转发
+	}
+	
+	/**
+	 * 显示餐桌列表页面
+	 */
+	public Object boardList(HttpServletRequest request, HttpServletResponse response){
+		
+
+		
+		
+		
+		Integer currentPage = 1;//默认第一页
+		Integer maxResult = 5;//每页最大显示条数
+		
+		//算出总页数
+		Integer count = tableService.getTotalCount();//总条数		
+		Integer totalPage = count%maxResult==0 ? count/maxResult : count/maxResult + 1;
+		request.setAttribute("totalPage", totalPage);
+		
+		//获取jsp传递过来的页码
+		String page = request.getParameter("page");
+		if(page!=null){
+			currentPage = Integer.parseInt(page);//设置当前页
+		}
+		
+		//当前页小于1
+		if(currentPage < 1){
+			currentPage = 1;//默认第一页
+		}
+		
+		//如果当前页大于总页数， 默认最后一页
+		if(currentPage > totalPage) currentPage = totalPage;
+		
+		List<Dinnertable> tableList = tableService.getAllByPage(currentPage, maxResult);
+		
+		//存放作用域，供jsp使用
+		request.setAttribute("currentPage", currentPage);
+		//数据查询所有餐桌列表的信息
+		request.setAttribute("tableList", tableList);
+		
+		
+		
 		return request.getRequestDispatcher("/sys/boardList.jsp");//转发
 	}
 
