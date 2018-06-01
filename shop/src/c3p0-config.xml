@@ -1,0 +1,29 @@
+<c3p0-config>
+<default-config>
+    <property name="jdbcUrl">jdbc:mysql://localhost:3306/shop?characterEncoding=utf-8</property>
+    <property name="driverClass">com.mysql.jdbc.Driver</property>
+    <property name="user">root</property>
+    <property name="password">123456</property>
+    <!--初始化时获取三个连接，取值应在minPoolSize与maxPoolSize之间。Default: 3 --> 
+    <property name="initialPoolSize">5</property>
+    <!--连接池中保留的最大连接数。Default: 6 -->
+    <property name="maxPoolSize">12</property>
+    <!--最大空闲时间,1000秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+    <property name="maxIdleTime">2000</property>
+</default-config>
+
+<!-- oracle 数据库的配置 -->
+<name-config name="oracleConfig">
+    <property name="jdbcUrl">jdbc:oracle:thin:@127.0.0.1:1521:orcl</property>
+    <property name="driverClass">oracle.jdbc.driver.OracleDriver</property>
+    <property name="user">scott</property>
+    <property name="password">tiger</property>
+    <!--初始化时获取三个连接，取值应在minPoolSize与maxPoolSize之间。Default: 3 --> 
+    <property name="initialPoolSize">5</property>
+    <!--连接池中保留的最大连接数。Default: 6 -->
+    <property name="maxPoolSize">12</property>
+    <!--最大空闲时间,1000秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+    <property name="maxIdleTime">2000</property>
+</name-config>
+
+</c3p0-config>
