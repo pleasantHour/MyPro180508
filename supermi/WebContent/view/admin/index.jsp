@@ -109,19 +109,17 @@
                         </a>
                         <ul class="nav nav-second-level">
                     		<li>
-                            	<a class="J_menuItem" href="order_list.jsp">订单列表</a>
+                    			alert(${pageContext.request.contextPath});
+                            	<a class="J_menuItem" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showOrderList">订单列表</a>
                             </li>
                             <li>
-                            	<a class="J_menuItem" href="order_list.jsp">待发货列表</a>
+                            	<a class="J_menuItem" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showOrderUnSendDList">待发货列表</a>
                             </li>
                             <li>
-                            	<a class="J_menuItem" href="order_sent_list.jsp">已发货列表</a>
+                            	<a class="J_menuItem" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showOrderSentList">已发货列表</a>
                             </li>
                              <li>
-                            	<a class="J_menuItem" href="order_finished_list.jsp">已完成列表</a>
-                            </li>
-                            <li>
-                            	<a class="J_menuItem" href="order_export.jsp">订单导出</a>
+                            	<a class="J_menuItem" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showOrderFinishedList">已完成列表</a>
                             </li>
                         </ul>
                     </li>

@@ -14,6 +14,11 @@
     <servlet-name>OrderServlet</servlet-name>
     <servlet-class>cn.sxt.supermi.web.OrderServlet</servlet-class>
   </servlet>
+  
+  <servlet>
+  	<servlet-name>AdminOrderServlet</servlet-name>
+  	<servlet-class>cn.sxt.supermi.web.admin.AdminOrderServlet</servlet-class>
+  </servlet>
 
 
   <servlet-mapping>
@@ -24,6 +29,10 @@
   <servlet-mapping>
     <servlet-name>OrderServlet</servlet-name>
     <url-pattern>/OrderServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminOrderServlet</servlet-name>
+    <url-pattern>/AdminOrderServlet</url-pattern>
   </servlet-mapping>
 
 
