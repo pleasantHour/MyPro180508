@@ -38,7 +38,7 @@ public interface OrderService {
 	 * @param o_State  修改后的订单状态
 	 * @return 受影响的行数
 	 */
-	public int updateState(Integer o_id,Integer o_State);
+	public int updateState(Integer o_id, Integer o_State,Integer num);
 	
 	/**
 	 * 获得自增的订单ID    即ID最大值

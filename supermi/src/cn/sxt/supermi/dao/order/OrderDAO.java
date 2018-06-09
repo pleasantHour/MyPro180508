@@ -51,9 +51,10 @@ public interface OrderDAO {
 	 * 修改订单状态  通过订单ID和状态
 	 * @param o_id  订单ID
 	 * @param o_State  修改后的订单状态
+	 * @param num  后台传2 前台传1
 	 * @return 受影响的行数
 	 */
-	public int updateState(Integer o_id,Integer o_State);
+	public int updateState(Integer o_id,Integer o_State,Integer num);
 	
 	/**
 	 * 获得自增的订单ID    即ID最大值

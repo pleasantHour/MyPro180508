@@ -44,16 +44,16 @@ public class OrderTest {
 			
 		}
 		
-
+		@Test
 		public void updateState() {
 			// TODO Auto-generated method stub
 			int l = 0;
-			l = d.updateState(4, 0);
+			l = d.updateState(5,2,2);
 			System.out.println(l);
 			
 		}
 		
-		@Test
+		
 		public void getMaxId() {
 			// TODO Auto-generated method stub
 			int l = 0;

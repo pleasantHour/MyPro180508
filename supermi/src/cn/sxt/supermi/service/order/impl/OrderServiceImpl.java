@@ -28,9 +28,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int updateState(Integer o_id, Integer o_State) {
+	public int updateState(Integer o_id, Integer o_State,Integer num) {
 		// TODO Auto-generated method stub
-		return dao.updateState(o_id, o_State);
+		return dao.updateState(o_id, o_State,num);
 	}
 
 	@Override

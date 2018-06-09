@@ -60,13 +60,13 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public int updateState(Integer o_id, Integer o_State) {
+	public int updateState(Integer o_id, Integer o_State,Integer num) {
 		// TODO Auto-generated method stub
 		//受影响的行
 		int count = 0;
 		try {
-			count = ComPoolUtil.getQueryRunner().update("UPDATE t_order set o_State = ? where o_Id = ?", 
-					o_State,o_id);
+			count = ComPoolUtil.getQueryRunner().update("UPDATE t_order set o_State = ? ,o_num = ? where o_Id = ?", 
+					o_State,num,o_id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

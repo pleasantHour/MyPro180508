@@ -70,4 +70,73 @@ public class OrderServlet extends BaseServlet{
 		// 返回一个转发对象，交给BaseServlet判断
 		return request.getRequestDispatcher("/view/order/user_order.jsp");
 	}
+	
+	/**
+	 * 列出所有当前用户的未发货订单
+	 * @param request
+	 * @param response
+	 * @return 转发对象，交给BaseServlet判断
+	 */
+	public Object listNotSend(HttpServletRequest request, HttpServletResponse response){
+		
+		//查询订单中未发货的订单
+		List<Order> list = oService.getStateList(u_id, 0);
+		//遍历订单集合 将每个订单的订单详情再存入实体里
+		for(Order o : list){
+			int o_id = o.getO_Id();
+			o.setDtList(dService.getAllList(o_id));
+		}
+		//把查询到的数据存入request域中
+		request.setAttribute("orderList", list);
+		//将查询类型设置为 待收货
+		request.setAttribute("type", 2);
+		// 返回一个转发对象，交给BaseServlet判断
+		return request.getRequestDispatcher("/view/order/user_order.jsp");
+	}
+	
+	/**
+	 * 列出所有当前用户的收货订单
+	 * @param request
+	 * @param response
+	 * @return 转发对象，交给BaseServlet判断
+	 */
+	public Object listReceive(HttpServletRequest request, HttpServletResponse response){
+		
+		//查询订单中未发货的订单
+		List<Order> list = oService.getStateList(u_id, 1);
+		//遍历订单集合 将每个订单的订单详情再存入实体里
+		for(Order o : list){
+			int o_id = o.getO_Id();
+			o.setDtList(dService.getAllList(o_id));
+		}
+		//把查询到的数据存入request域中
+		request.setAttribute("orderList", list);
+		//将查询类型设置为 待收货
+		request.setAttribute("type", 3);
+		// 返回一个转发对象，交给BaseServlet判断
+		return request.getRequestDispatcher("/view/order/user_order.jsp");
+	}
+	
+	/**
+	 * 列出所有当前用户的关闭订单
+	 * @param request
+	 * @param response
+	 * @return 转发对象，交给BaseServlet判断
+	 */
+	public Object listClose(HttpServletRequest request, HttpServletResponse response){
+		
+		//查询订单中关闭的订单
+		List<Order> list = oService.getStateList(u_id, 2);
+		//遍历订单集合 将每个订单的订单详情再存入实体里
+		for(Order o : list){
+			int o_id = o.getO_Id();
+			o.setDtList(dService.getAllList(o_id));
+		}
+		//把查询到的数据存入request域中
+		request.setAttribute("orderList", list);
+		//将查询类型设置为 已取消
+		request.setAttribute("type", 4);
+		// 返回一个转发对象，交给BaseServlet判断
+		return request.getRequestDispatcher("/view/order/user_order.jsp");
+	}
 }
