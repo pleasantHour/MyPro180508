@@ -19,12 +19,26 @@ public interface OrderDAO {
 	public List<Order> getAllList(int u_id);
 	
 	/**
+	 * 返回所有订单 按时间倒序
+	 * 
+	 * @return 当前所有的订单集合
+	 */
+	public List<Order> getAll();
+	
+	/**
 	 * 通过用户id和订单状态查询指定订单
 	 * @param u_id  用户id
 	 * @param o_State  订单状态
 	 * @return 当前用户指定状态订单集合
 	 */
 	public List<Order> getStateList(Integer u_id,Integer o_State);
+	
+	/**
+	 * 通过订单状态查询订单
+	 * @param o_State  订单状态
+	 * @return 当前指定状态订单集合
+	 */
+	public List<Order> getAllStateList(Integer o_State);
 	
 	/**
 	 * 新增   主键自动增长不传值  订单状态默认为0

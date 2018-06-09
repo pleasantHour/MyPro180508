@@ -39,4 +39,16 @@ public class OrderServiceImpl implements OrderService {
 		return dao.getMaxId();
 	}
 
+	@Override
+	public List<Order> getAll() {
+		// TODO Auto-generated method stub
+		return dao.getAll();
+	}
+
+	@Override
+	public List<Order> getAllStateList(Integer o_State) {
+		// TODO Auto-generated method stub
+		return dao.getAllStateList(o_State);
+	}
+
 }

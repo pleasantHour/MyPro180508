@@ -9,11 +9,21 @@
     <servlet-name>ShopCartServlet</servlet-name>
     <servlet-class>cn.sxt.supermi.web.ShopCartServlet</servlet-class>
   </servlet>
+  
+  <servlet>
+    <servlet-name>OrderServlet</servlet-name>
+    <servlet-class>cn.sxt.supermi.web.OrderServlet</servlet-class>
+  </servlet>
 
 
   <servlet-mapping>
     <servlet-name>ShopCartServlet</servlet-name>
     <url-pattern>/ShopCartServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>OrderServlet</servlet-name>
+    <url-pattern>/OrderServlet</url-pattern>
   </servlet-mapping>
 
 

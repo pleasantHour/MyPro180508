@@ -19,6 +19,7 @@ public class OrderServlet extends BaseServlet{
 	//订单和订单详情的服务类
 	public OrderService oService = new OrderServiceImpl();
 	public DetailService dService = new DetailServiceImpl();
+	
 	/**
 	 * 列出所有当前用户的订单
 	 * @param request
@@ -32,7 +33,7 @@ public class OrderServlet extends BaseServlet{
 //		}
 		//假设用户id是1
 		this.u_id = 1;
-		//查询购物车中用户id是1的所有商品
+		//查询订单中用户id所有订单
 		List<Order> list = oService.getAllList(u_id);
 		//遍历订单集合 将每个订单的订单详情再存入实体里
 		for(Order o : list){
@@ -43,6 +44,29 @@ public class OrderServlet extends BaseServlet{
 		request.setAttribute("orderList", list);
 		//将查询类型设置为 全部订单
 		request.setAttribute("type", 0);
+		// 返回一个转发对象，交给BaseServlet判断
+		return request.getRequestDispatcher("/view/order/user_order.jsp");
+	}
+	
+	/**
+	 * 列出所有当前用户的未支付订单
+	 * @param request
+	 * @param response
+	 * @return 转发对象，交给BaseServlet判断
+	 */
+	public Object listNotPay(HttpServletRequest request, HttpServletResponse response){
+		
+		//查询订单中未支付的订单
+		List<Order> list = oService.getStateList(u_id, 3);
+		//遍历订单集合 将每个订单的订单详情再存入实体里
+		for(Order o : list){
+			int o_id = o.getO_Id();
+			o.setDtList(dService.getAllList(o_id));
+		}
+		//把查询到的数据存入request域中
+		request.setAttribute("orderList", list);
+		//将查询类型设置为 待支付
+		request.setAttribute("type", 1);
 		// 返回一个转发对象，交给BaseServlet判断
 		return request.getRequestDispatcher("/view/order/user_order.jsp");
 	}

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
     <!-- 排除，不进行装饰的路径 -->
+    
     <mapping path="/pass/**" exclue="true"/>
     <mapping path="/druid/*" exclue="true"/>
     <mapping path="/recommend/**" exclue="true"/>
@@ -9,8 +10,10 @@
     <mapping path="/cart/topbar" exclue="true"/>
     <mapping path="/comment/tileLineList" exclue="true"/>
     <mapping path="/swagger-ui.html" exclue="true"/>
-    <mapping path="/view/admin/*" exclue="true"/>
     <mapping path="/view/order/*" exclue="true"/>
+    <mapping path="/view/admin/*" exclue="true"/>
+    
+    
     
   	<!-- 前端商城布局 -->
     <mapping>

@@ -101,6 +101,32 @@ public class OrderDAOImpl implements OrderDAO {
 		return count;
 	}
 
+	@Override
+	public List<Order> getAll() {
+		// TODO Auto-generated method stub
+		List<Order> list = null;
+		try {
+			list = ComPoolUtil.getQueryRunner().query("select * from t_order ORDER BY o_time desc",
+					new BeanListHandler<Order>(Order.class));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Order> getAllStateList(Integer o_State) {
+		// TODO Auto-generated method stub
+		List<Order> list = null;
+		try {
+			list = ComPoolUtil.getQueryRunner().query("select * from t_order where o_State = ?",
+					new BeanListHandler<Order>(Order.class),o_State);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	
 
 }

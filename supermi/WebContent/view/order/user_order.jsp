@@ -34,8 +34,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <h1 class="title">我的订单<small>请谨防钓鱼链接或诈骗电话</small></h1>
         <div class="more clearfix">
           <ul class="filter-list J_orderType">
-            <li class="first ${type eq 0 ? 'active':''}"><a href="${pageContext.request.contextPath}/view/order/user_order.jsp?method=list" data-type="0">全部有效订单</a></li>
-            <li class="${type eq 1 ? 'active':''}"><a id="J_unpaidTab" href="#" data-type="1">待支付</a></li>
+            <li class="first ${type eq 0 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=list" data-type="0">全部有效订单</a></li>
+            <li class="${type eq 1 ? 'active':''}"><a id="J_unpaidTab" href="${pageContext.request.contextPath}/OrderServlet?method=listNotPay" data-type="1">待支付</a></li>
             <li class="${type eq 2 ? 'active':''}"><a id="J_sendTab" href="#" data-type="2">待收货</a></li>
             <li class="${type eq 3 ? 'active':''}"><a href="#" data-type="3">已关闭</a></li>
           </ul>
@@ -67,8 +67,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
-                              <fmt:formatDate value="${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />
+                              <fmt:formatDate value="${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />${o.o_Time}
                               <span class="sep">|</span>陈星星<span class="sep">|</span>订单号：${o.o_Id}<span class="sep">|</span>在线支付</p>
+                              <p class="caption-info">收货地址:	${o.o_Addr}</p>
                           </th>
                           <th class="col-sub"> <p class="caption-price">订单金额：<span class="num">${o.o_Price}</span>元</p>
                           </th>
@@ -104,8 +105,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
-                              <fmt:formatDate value="${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />
+                              <fmt:formatDate value= "${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />${o.o_Time}
                               <span class="sep">|</span>陈星星<span class="sep">|</span>订单号：${o.o_Id}<span class="sep">|</span>在线支付</p>
+                              <p class="caption-info">收货地址:	${o.o_Addr}</p>
                           </th>
                           <th class="col-sub"> <p class="caption-price">订单金额：<span class="num">${o.o_Price}</span>元</p>
                           </th>
@@ -116,13 +118,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <td class="order-items"><ul class="goods-list">
                               <c:forEach items="${o.dtList}" var="d">
                                 <li>
-                                  <div class="figure figure-thumb"> <a href="#" target="_blank"> <img src="${d.d_Addr}" width="80" height="80" alt="测试一&nbsp;&nbsp;测试类别一" title="测试一&nbsp;&nbsp;测试类别一"> </a> </div>
+                                  <div class="figure figure-thumb"> <a href="#" target="_blank"> <img src="${pageContext.request.contextPath}/${d.d_Addr}"" width="80" height="80" alt="测试一&nbsp;&nbsp;测试类别一" title="测试一&nbsp;&nbsp;测试类别一"> </a> </div>
                                   <p class="name"> <a target="_blank" href="#">${d.d_Spes}</a> </p>
                                   <p class="price">${d.d_Price}元 × ${d.d_Num}</p>
                                 </li>
                               </c:forEach>
                             </ul></td>
-                          <td class="order-actions"><a class="btn btn-small btn-primary" href="#" target="_blank">提醒发货</a></td>
+                          <td class="order-actions"><a class="btn btn-small btn-primary" href="#" target="_blank">取消订单</a></td>
                         </tr>
                       </tbody>
                     </table>
@@ -139,8 +141,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
-                              <fmt:formatDate value="${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />
+                              <fmt:formatDate value="${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />${o.o_Time}
                               <span class="sep">|</span>陈星星<span class="sep">|</span>订单号： ${o.o_Id}<span class="sep">|</span>在线支付</p>
+                              <p class="caption-info">收货地址:	${o.o_Addr}</p>
                           </th>
                           <th class="col-sub"> <p class="caption-price">订单金额：<span class="num">${o.o_Price}</span>元</p>
                           </th>
@@ -164,7 +167,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </div>
                 </li>
               </c:if>
-              <c:if test="${o.o_State eq 3}">
+              <c:if test="${o.o_State eq 2}">
                 <li class="uc-order-item uc-order-item-finish">
                   <div class="order-detail">
                     <div class="order-summary">
@@ -174,8 +177,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
-                              <fmt:formatDate value="${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />
+                              <fmt:formatDate value="${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />${o.o_Time}
                               <span class="sep">|</span>陈星星<span class="sep">|</span>订单号：${o.o_Id}<span class="sep">|</span>在线支付</p>
+                              <p class="caption-info">收货地址:	${o.o_Addr}</p>
                           </th>
                           <th class="col-sub"> <p class="caption-price">订单金额：<span class="num">${o.o_Price}</span>元</p>
                           </th>

@@ -45,4 +45,18 @@ public interface OrderService {
 	 * @return 订单自增ID
 	 */
 	public int getMaxId();
+	
+	/**
+	 * 返回所有订单 按时间倒序
+	 * 
+	 * @return 当前所有的订单集合
+	 */
+	public List<Order> getAll();
+	
+	/**
+	 * 通过订单状态查询订单
+	 * @param o_State  订单状态
+	 * @return 当前指定状态订单集合
+	 */
+	public List<Order> getAllStateList(Integer o_State);
 }
