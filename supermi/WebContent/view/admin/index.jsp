@@ -107,7 +107,7 @@
                             <span class="nav-label">订单管理</span>
                             <span class="fa arrow"></span>
                         </a>
-                        <ul class="nav nav-second-level">
+                        <ul class="nav nav-second-level"> 
                     		<li>
                             	<a class="J_menuItem" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showOrderList">订单列表</a>
                             </li>
