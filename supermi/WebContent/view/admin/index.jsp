@@ -109,7 +109,6 @@
                         </a>
                         <ul class="nav nav-second-level">
                     		<li>
-                    			alert(${pageContext.request.contextPath});
                             	<a class="J_menuItem" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showOrderList">订单列表</a>
                             </li>
                             <li>
