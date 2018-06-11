@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -75,10 +76,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
+                          <!--拆分用户信息  姓名;手机号;收货地址  -->
+                          	<c:set value="${fn:split(o.o_Addr,';') }" var="them"></c:set>
+							<c:set value="${them[0]}" var="name"></c:set>
+							<c:set value="${them[1]}" var="phone"></c:set>
+							<c:set value="${them[2]}" var="addr"></c:set>
                           	  <fmt:parseDate value="${o.o_Time}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate"></fmt:parseDate>
                               <fmt:formatDate value="${receiveDate}" pattern="yyyy-MM-dd HH:mm:ss" />
-                              <span class="sep">|</span>陈星星<span class="sep">|</span>订单号：${o.o_Id}<span class="sep">|</span>在线支付</p>
-                              <p class="caption-info">收货地址:	${o.o_Addr}</p>
+                              <span class="sep">|</span>姓名：${name}<span class="sep">|</span>订单号：${o.o_Id} <span class="sep">|</span>在线支付</p>
+                              <p class="caption-info">收货地址:	${addr}	<span class="sep">|</span>${phone}</p>
                           </th>
                           <th class="col-sub"> <p class="caption-price">订单金额：<span class="num">${o.o_Price}</span>元</p>
                           </th>
@@ -117,10 +123,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
+                          <!--拆分用户信息  姓名;手机号;收货地址  -->
+                          	<c:set value="${fn:split(o.o_Addr,';') }" var="them"></c:set>
+							<c:set value="${them[0]}" var="name"></c:set>
+							<c:set value="${them[1]}" var="phone"></c:set>
+							<c:set value="${them[2]}" var="addr"></c:set>
                               <fmt:parseDate value="${o.o_Time}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate"></fmt:parseDate>
                               <fmt:formatDate value="${receiveDate}" pattern="yyyy-MM-dd HH:mm:ss" />
-                              <span class="sep">|</span>陈星星<span class="sep">|</span>订单号：${o.o_Id}<span class="sep">|</span>在线支付</p>
-                              <p class="caption-info">收货地址:	${o.o_Addr}</p>
+                              <span class="sep">|</span>姓名：${name}<span class="sep">|</span>订单号：${o.o_Id} <span class="sep">|</span>在线支付</p>
+                              <p class="caption-info">收货地址:	${addr}	<span class="sep">|</span>${phone}</p>
                           </th>
                           <th class="col-sub"> <p class="caption-price">订单金额：<span class="num">${o.o_Price}</span>元</p>
                           </th>
@@ -139,9 +150,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </ul></td>
                            
                           <td class="order-actions">
-                  
-    
-                          <a class="btn btn-small btn-primary" href="${pageContext.request.contextPath}/OrderServlet?method=cancelList&oid=${o.o_Id}&type=${type}">提醒发货</a> 
+                          
+                  		<c:choose>
+	    					<c:when test="${o.flag}">
+	    						<a  class="btn btn-small btn-primary" href="${pageContext.request.contextPath}/OrderServlet?method=remindSend&oid=${o.o_Id}&olevel=${o.o_level}&type=${type}">提醒发货</a> 
+							</c:when>
+							<c:otherwise>
+								<a  disabled="disabled" class="btn btn-small btn-primary" href="javascript::"><span style="color:red;font-size:8px">24小时后提醒发货</span></a> 
+							</c:otherwise> 
+						</c:choose>
                           <a class="btn btn-small btn-primary" href="${pageContext.request.contextPath}/OrderServlet?method=cancelList&oid=${o.o_Id}&type=${type}">取消订单</a>
                           </td>
                         </tr>
@@ -160,10 +177,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
-                              <fmt:parseDate value="${o.o_Time}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate"></fmt:parseDate>
+                          <!--拆分用户信息  姓名;手机号;收货地址  -->
+                          	<c:set value="${fn:split(o.o_Addr,';') }" var="them"></c:set>
+							<c:set value="${them[0]}" var="name"></c:set>
+							<c:set value="${them[1]}" var="phone"></c:set>
+							<c:set value="${them[2]}" var="addr"></c:set>
+                             <fmt:parseDate value="${o.o_Time}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate"></fmt:parseDate>
                               <fmt:formatDate value="${receiveDate}" pattern="yyyy-MM-dd HH:mm:ss" />
-                              <span class="sep">|</span>陈星星<span class="sep">|</span>订单号： ${o.o_Id}<span class="sep">|</span>在线支付</p>
-                              <p class="caption-info">收货地址:	${o.o_Addr}</p>
+                              <span class="sep">|</span>姓名：${name}<span class="sep">|</span>订单号：${o.o_Id} <span class="sep">|</span>在线支付</p>
+                              <p class="caption-info">收货地址:	${addr}	<span class="sep">|</span>${phone}</p>
                           </th>
                           <th class="col-sub"> <p class="caption-price">订单金额：<span class="num">${o.o_Price}</span>元</p>
                           </th>
@@ -197,10 +219,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
+                          <!--拆分用户信息  姓名;手机号;收货地址  -->
+                          	<c:set value="${fn:split(o.o_Addr,';') }" var="them"></c:set>
+							<c:set value="${them[0]}" var="name"></c:set>
+							<c:set value="${them[1]}" var="phone"></c:set>
+							<c:set value="${them[2]}" var="addr"></c:set>
                               <fmt:parseDate value="${o.o_Time}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate"></fmt:parseDate>
                               <fmt:formatDate value="${receiveDate}" pattern="yyyy-MM-dd HH:mm:ss" />
-                              <span class="sep">|</span>陈星星<span class="sep">|</span>订单号：${o.o_Id}<span class="sep">|</span>在线支付</p>
-                              <p class="caption-info">收货地址:	${o.o_Addr}</p>
+                              <span class="sep">|</span>姓名：${name}<span class="sep">|</span>订单号：${o.o_Id} <span class="sep">|</span>在线支付</p>
+                              <p class="caption-info">收货地址:	${addr}	<span class="sep">|</span>${phone}</p>
                           </th>
                           <th class="col-sub"> <p class="caption-price">订单金额：<span class="num">${o.o_Price}</span>元</p>
                           </th>

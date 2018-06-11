@@ -88,4 +88,10 @@ public class OrderServiceImpl implements OrderService {
 		return flag;
 	}
 
+	@Override
+	public int updateBtnTime(Integer o_id,Integer o_level) {
+		// TODO Auto-generated method stub
+		return dao.updateBtnTime(o_id,o_level);
+	}
+
 }

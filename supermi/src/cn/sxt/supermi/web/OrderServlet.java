@@ -84,10 +84,11 @@ public class OrderServlet extends BaseServlet{
 		
 		//查询订单中未发货的订单
 		List<Order> list = oService.getStateList(u_id, 0);
-		//遍历订单集合 将每个订单的订单详情再存入实体里
+		//遍历订单集合 将每个订单的订单详情、每个未发货订单的提醒发货按钮标志 存入实体里
 		for(Order o : list){
 			int o_id = o.getO_Id();
 			o.setDtList(dService.getAllList(o_id));
+			o.setFlag(oService.outTimeFlag(o));
 		}
 		//把查询到的数据存入request域中
 		request.setAttribute("orderList", list);
@@ -170,4 +171,30 @@ public class OrderServlet extends BaseServlet{
 		return request.getRequestDispatcher("OrderServlet?method="+method);
 	}
 	
+	/**
+	 * 提醒发货功能  优先级升级
+	 * @param request
+	 * @param response
+	 * @return 转发对象，交给BaseServlet判断
+	 */
+	public Object remindSend(HttpServletRequest request, HttpServletResponse response){
+		//取得页面传的 订单实体  当前订单类型
+		int o_id = Integer.parseInt(request.getParameter("oid"));
+		int type = Integer.parseInt(request.getParameter("type"));
+		int o_level = Integer.parseInt(request.getParameter("olevel"));
+		//修改当前用户订单提醒发货时间为系统时间  并将优先级提升一级
+		o_level++;
+		oService.updateBtnTime(o_id, o_level);
+		//判断刷新页面时查看的订单状态
+		String method = "";
+		if(type == 0){
+			method = "list";
+		}else if(type == 2){
+			method = "listNotSend";
+		}else{
+			method = "list";
+		}
+		// 返回一个转发对象，交给BaseServlet判断
+		return request.getRequestDispatcher("OrderServlet?method="+method);
+	}
 }

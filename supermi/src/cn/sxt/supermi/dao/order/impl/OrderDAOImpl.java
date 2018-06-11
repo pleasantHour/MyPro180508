@@ -106,7 +106,7 @@ public class OrderDAOImpl implements OrderDAO {
 		// TODO Auto-generated method stub
 		List<Order> list = null;
 		try {
-			list = ComPoolUtil.getQueryRunner().query("select * from t_order ORDER BY o_btnTime,o_time desc",
+			list = ComPoolUtil.getQueryRunner().query("select * from t_order ORDER BY o_level desc,o_time desc",
 					new BeanListHandler<Order>(Order.class));
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -125,6 +125,20 @@ public class OrderDAOImpl implements OrderDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public int updateBtnTime(Integer o_id,Integer o_level) {
+		// TODO Auto-generated method stub
+		//受影响的行
+		int count = 0;
+		try {
+			count = ComPoolUtil.getQueryRunner().update("UPDATE t_order set o_btnTime= NOW(),o_level=? where o_Id = ?", 
+					o_level,o_id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	

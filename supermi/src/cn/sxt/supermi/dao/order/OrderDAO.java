@@ -68,4 +68,12 @@ public interface OrderDAO {
 	 * @return 影响行数
 	 */
 	public int updateAddr(Order o);
+	
+	/**
+	 * 修改订单表中的提醒发货时间  当前系统时间
+	 * @param o_id 订单ID
+	 * @param o_level 优先级
+	 * @return 影响行数
+	 */
+	public int updateBtnTime(Integer o_id,Integer o_level);
 }

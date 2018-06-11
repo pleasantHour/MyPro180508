@@ -69,6 +69,14 @@ public interface OrderService {
 	public int updateAddr(Order o);
 	
 	/**
+	 * 修改订单表中的提醒发货时间  当前系统时间
+	 * @param o_id 订单ID
+	 * @param o_level 优先级
+	 * @return 影响行数
+	 */
+	public int updateBtnTime(Integer o_id,Integer o_level);
+	
+	/**
 	 * 判断时间是否超过24小时 
 	 * @param o  订单实体  内封装上次按提醒发货按钮的时间
 	 * @return true 超过24小时     false 未超过24小时
