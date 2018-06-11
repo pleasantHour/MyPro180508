@@ -27,10 +27,10 @@ public class OrderServlet extends BaseServlet{
 	 * @return 转发对象，交给BaseServlet判断
 	 */
 	public Object list(HttpServletRequest request, HttpServletResponse response){
-		//获取url传来的用户ID  并存在成员u_id中
-//		if(this.u_id == -1){
-//			this.u_id = Integer.parseInt(request.getParameter("uid"));
-//		}
+		//获取Session传来的用户ID  并存在成员u_id中
+
+		//this.u_id = (int)request.getSession().getAttribute("uid");
+
 		//假设用户id是1
 		this.u_id = 1;
 		//查询订单中用户id所有订单
@@ -139,4 +139,32 @@ public class OrderServlet extends BaseServlet{
 		// 返回一个转发对象，交给BaseServlet判断
 		return request.getRequestDispatcher("/view/order/user_order.jsp");
 	}
+	
+	/**
+	 * 取消当前用户订单 用户取消
+	 * @param request
+	 * @param response
+	 * @return 转发对象，交给BaseServlet判断
+	 */
+	public Object cancelList(HttpServletRequest request, HttpServletResponse response){
+		//取得页面传的 订单ID  当前订单类型
+		int oid = Integer.parseInt(request.getParameter("oid"));
+		int type = Integer.parseInt(request.getParameter("type"));
+		//修改当前用户订单状态为取消 取消原因  用户取消
+		oService.updateState(oid, 2, 1);
+		// 返回一个重定向地址，交给BaseServlet判断
+		list(request, response);
+		//判断刷新页面时查看的订单状态
+		String method = "";
+		if(type == 1){
+			method = "listNotPay";
+		}else if(type == 2){
+			method = "listNotSend";
+		}else{
+			method = "list";
+		}
+		// 返回一个转发对象，交给BaseServlet判断
+		return request.getRequestDispatcher("OrderServlet?method="+method);
+	}
+	
 }

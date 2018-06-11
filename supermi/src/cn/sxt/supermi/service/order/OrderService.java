@@ -36,6 +36,7 @@ public interface OrderService {
 	 * 修改订单状态  通过订单ID和状态
 	 * @param o_id  订单ID
 	 * @param o_State  修改后的订单状态
+	 * @param num  1 用户取消 2 后台取消
 	 * @return 受影响的行数
 	 */
 	public int updateState(Integer o_id, Integer o_State,Integer num);

@@ -14,9 +14,13 @@ public class Order {
 
     private Integer o_Price;//总价
 
-    private Integer o_Num;//数量
+    private Integer o_Num;//取消原因   用户1 后台2
 
     private String o_Time;//订单时间
+    
+    private Integer o_level;//优先级
+    
+    private String o_btnTime;
     
     private List<Detail> dtList;//订单详情的集合 即该订单下的多个商品
 
@@ -43,6 +47,22 @@ public class Order {
 		this.o_Price = o_Price;
 		this.o_Num = o_Num;
 		this.o_Time = o_Time;
+	}
+
+	public Integer getO_level() {
+		return o_level;
+	}
+
+	public void setO_level(Integer o_level) {
+		this.o_level = o_level;
+	}
+
+	public String getO_btnTime() {
+		return o_btnTime;
+	}
+
+	public void setO_btnTime(String o_btnTime) {
+		this.o_btnTime = o_btnTime;
 	}
 
 	public Integer getO_Id() {

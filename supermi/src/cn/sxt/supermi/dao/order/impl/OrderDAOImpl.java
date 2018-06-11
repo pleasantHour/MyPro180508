@@ -37,7 +37,7 @@ public class OrderDAOImpl implements OrderDAO {
 		// TODO Auto-generated method stub
 		List<Order> list = null;
 		try {
-			list = ComPoolUtil.getQueryRunner().query("select * from t_order where u_id = ? and o_State = ?",
+			list = ComPoolUtil.getQueryRunner().query("select * from t_order where u_id = ? and o_State = ? ORDER BY o_time desc",
 					new BeanListHandler<Order>(Order.class),u_id,o_State);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -51,8 +51,8 @@ public class OrderDAOImpl implements OrderDAO {
 		//受影响的行
 		int count = 0;
 		try {
-			count = ComPoolUtil.getQueryRunner().update("INSERT INTO t_order (u_Id,o_State,o_addr,o_price,o_time) VALUES(?,?,?,?,NOW())", 
-					t.getU_Id(),t.getO_State(),t.getO_Addr(),t.getO_Price());
+			count = ComPoolUtil.getQueryRunner().update("INSERT INTO t_order (u_Id,o_State,o_addr,o_price,o_time,o_level) VALUES(?,?,?,?,NOW(),?)", 
+					t.getU_Id(),t.getO_State(),t.getO_Addr(),t.getO_Price(),0);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -106,7 +106,7 @@ public class OrderDAOImpl implements OrderDAO {
 		// TODO Auto-generated method stub
 		List<Order> list = null;
 		try {
-			list = ComPoolUtil.getQueryRunner().query("select * from t_order ORDER BY o_time desc",
+			list = ComPoolUtil.getQueryRunner().query("select * from t_order ORDER BY o_btnTime,o_time desc",
 					new BeanListHandler<Order>(Order.class));
 		} catch (SQLException e) {
 			e.printStackTrace();

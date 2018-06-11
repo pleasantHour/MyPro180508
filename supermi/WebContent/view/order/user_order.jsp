@@ -1,9 +1,12 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 //List<User> us = //(List<User>)request.getAttribute("userList");
+
+
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -23,10 +26,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="${pageContext.request.contextPath}/view/order/css/main.css" />
  
   </head>
-  	
+  
+  <script type="text/javascript"> 
+  		
+  </script> 
 	
   
   <body>
+  
    <div class="span16">
   <div class="uc-box uc-main-box">
     <div class="uc-content-box order-list-box">
@@ -61,14 +68,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li class="uc-order-item uc-order-item-pay">
                   <div class="order-detail">
                     <div class="order-summary">
-                      <div class="order-status">等待付款</div>
+                      <div class="order-status">待支付</div>
                       <p class="order-desc J_deliverDesc"> 我们将尽快为您发货 </p>
                     </div>
                     <table class="order-detail-table">
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
-                              <fmt:formatDate value="${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />${o.o_Time}
+                          	  <fmt:parseDate value="${o.o_Time}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate"></fmt:parseDate>
+                              <fmt:formatDate value="${receiveDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                               <span class="sep">|</span>陈星星<span class="sep">|</span>订单号：${o.o_Id}<span class="sep">|</span>在线支付</p>
                               <p class="caption-info">收货地址:	${o.o_Addr}</p>
                           </th>
@@ -88,7 +96,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </li>
                               </c:forEach>
                             </ul></td>
-                          <td class="order-actions"><a class="btn btn-small btn-primary" href="#" target="_blank">立即支付</a></td>
+                          <td class="order-actions">
+                          <a class="btn btn-small btn-primary" href="#" target="_blank">立即支付</a>
+                          <a class="btn btn-small btn-primary" href="${pageContext.request.contextPath}/OrderServlet?method=cancelList&oid=${o.o_Id}&type=${type}">取消订单</a>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -106,7 +117,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
-                              <fmt:formatDate value= "${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />${o.o_Time}
+                              <fmt:parseDate value="${o.o_Time}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate"></fmt:parseDate>
+                              <fmt:formatDate value="${receiveDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                               <span class="sep">|</span>陈星星<span class="sep">|</span>订单号：${o.o_Id}<span class="sep">|</span>在线支付</p>
                               <p class="caption-info">收货地址:	${o.o_Addr}</p>
                           </th>
@@ -125,7 +137,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </li>
                               </c:forEach>
                             </ul></td>
-                          <td class="order-actions"><a class="btn btn-small btn-primary" href="#" target="_blank">取消订单</a></td>
+                           
+                          <td class="order-actions">
+                  
+    
+                          <a class="btn btn-small btn-primary" href="${pageContext.request.contextPath}/OrderServlet?method=cancelList&oid=${o.o_Id}&type=${type}">提醒发货</a> 
+                          <a class="btn btn-small btn-primary" href="${pageContext.request.contextPath}/OrderServlet?method=cancelList&oid=${o.o_Id}&type=${type}">取消订单</a>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -142,7 +160,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
-                              <fmt:formatDate value="${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />${o.o_Time}
+                              <fmt:parseDate value="${o.o_Time}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate"></fmt:parseDate>
+                              <fmt:formatDate value="${receiveDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                               <span class="sep">|</span>陈星星<span class="sep">|</span>订单号： ${o.o_Id}<span class="sep">|</span>在线支付</p>
                               <p class="caption-info">收货地址:	${o.o_Addr}</p>
                           </th>
@@ -161,7 +180,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </li>
                               </c:forEach>
                             </ul></td>
-                           <td class="order-actions"><a class="btn btn-small btn-primary" href="#" target="_blank">申请售后</a></td>
+                           
                         </tr>
                       </tbody>
                     </table>
@@ -172,13 +191,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li class="uc-order-item uc-order-item-finish">
                   <div class="order-detail">
                     <div class="order-summary">
-                      <div class="order-status">已关闭</div>
+                      <div class="order-status">已关闭&nbsp&nbsp&nbsp<span style="color:red;font-size:25px">${o.o_Num eq 1 ? "用户关闭":"后台关闭"}</span></div>
                     </div>
                     <table class="order-detail-table">
                       <thead>
                         <tr>
                           <th class="col-main"> <p class="caption-info">
-                              <fmt:formatDate value="${o.o_Time}" pattern="yyyy年MM月dd日 hh:mm" />${o.o_Time}
+                              <fmt:parseDate value="${o.o_Time}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate"></fmt:parseDate>
+                              <fmt:formatDate value="${receiveDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                               <span class="sep">|</span>陈星星<span class="sep">|</span>订单号：${o.o_Id}<span class="sep">|</span>在线支付</p>
                               <p class="caption-info">收货地址:	${o.o_Addr}</p>
                           </th>
@@ -197,7 +217,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </li>
                               </c:forEach>
                             </ul></td>
-                          <td class="order-actions"><a class="btn btn-small btn-primary" href="#" target="_blank">关闭原因</a></td>
+     
+                          <td class="order-actions"><button class="btn btn-small btn-primary"  href="javascript:void(0)" >关闭原因: ${o.o_Num eq 1 ? "用户取消":"后台取消"}</button></td>
+                          
                         </tr>
                       </tbody>
                     </table>
