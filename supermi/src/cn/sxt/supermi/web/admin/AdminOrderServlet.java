@@ -1,7 +1,5 @@
 package cn.sxt.supermi.web.admin;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +81,7 @@ public class AdminOrderServlet extends BaseServlet{
 		int i = 0;
 		for (Order order : orderList) {
 			i++;
+			
 			//u = userSer.getUserByID();
 			u = new User("jack"+i,"jackNiCk","jackpwd","15074452008","男","null"+i);
 			maps.put(u, order);
