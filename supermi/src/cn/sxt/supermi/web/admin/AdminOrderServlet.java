@@ -36,17 +36,17 @@ public class AdminOrderServlet extends BaseServlet{
 		//存放用户及订单的 Map
 		Map<User,Order> maps = new HashMap<User,Order>();
 		//用户对象
-		User u = new User();
-		int i = 0;
-		for (Order order : orderList) {
-			i++;
-			//u = userSer.getUserByID();
-			u = new User("jack"+i,"jackNiCk","jackpwd","15074452008","男","null"+i);
-			maps.put(u, order);
-		}
-		System.out.println("所有订单maps大小"+maps.size());
-		System.out.println("所有订单list大小"+orderList.size());
-		request.getSession().setAttribute("orderMap", maps);
+//		User u = new User();
+//		int i = 0;
+//		for (Order order : orderList) {
+//			i++;
+//			//u = userSer.getUserByID();
+//			u = new User("jack"+i,"jackNiCk","jackpwd","15074452008","男","null"+i);
+//			maps.put(u, order);
+//		}
+//		System.out.println("所有订单maps大小"+maps.size());
+//		System.out.println("所有订单list大小"+orderList.size());
+//		request.getSession().setAttribute("orderMap", maps);
 //		return return request.getRequestDispatcher("/view/admin/order_list.jsp");
 		return "/view/admin/order_list.jsp";
 	}
@@ -58,7 +58,7 @@ public class AdminOrderServlet extends BaseServlet{
 		//获得所有未发货状态的订单列表集合（o_State= 0 ）
 		List<Order> orderList = orderSer.getAllStateList(0);
 		//存放用户及订单的 Map
-		Map<User,Order> maps = new HashMap<User,Order>();
+		/*Map<User,Order> maps = new HashMap<User,Order>();
 		//用户对象
 		User u = new User();
 		int i = 0;
@@ -70,7 +70,7 @@ public class AdminOrderServlet extends BaseServlet{
 		}
 		System.out.println("所有订单maps大小"+maps.size());
 		System.out.println("所有订单list大小"+orderList.size());
-		request.getSession().setAttribute("orderMap", maps);
+		request.getSession().setAttribute("orderMap", maps);*/
 //		return request.getRequestDispatcher("/view/admin/order_list_unsend.jsp");
 		return "/view/admin/order_list_unsend.jsp";
 	}
@@ -82,7 +82,7 @@ public class AdminOrderServlet extends BaseServlet{
 		//获得所有已发货状态的订单列表集合（o_State= 1 ）
 		List<Order> orderList = orderSer.getAllStateList(1);
 		//存放用户及订单的 Map
-		Map<User,Order> maps = new HashMap<User,Order>();
+		/*Map<User,Order> maps = new HashMap<User,Order>();
 		//用户对象
 		User u = new User();
 		int i = 0;
@@ -94,7 +94,7 @@ public class AdminOrderServlet extends BaseServlet{
 		}
 		System.out.println("所有订单maps大小"+maps.size());
 		System.out.println("所有订单list大小"+orderList.size());
-		request.getSession().setAttribute("orderMap", maps);
+		request.getSession().setAttribute("orderMap", maps);*/
 //		return request.getRequestDispatcher("/view/admin/order_sent_list.jsp");
 		return "/view/admin/order_sent_list.jsp";
 	}
@@ -107,7 +107,7 @@ public class AdminOrderServlet extends BaseServlet{
 		List<Order> orderList = orderSer.getAllStateList(1);
 		//存放用户及订单的 Map
 		Map<User,Order> maps = new HashMap<User,Order>();
-		//用户对象
+		/*//用户对象
 		User u = new User();
 		int i = 0;
 		for (Order order : orderList) {
@@ -118,7 +118,7 @@ public class AdminOrderServlet extends BaseServlet{
 		}
 		System.out.println("所有订单maps大小"+maps.size());
 		System.out.println("所有订单list大小"+orderList.size());
-		request.getSession().setAttribute("orderMap", maps);
+		request.getSession().setAttribute("orderMap", maps);*/
 		return "/view/admin/order_finished_list.jsp";
 //		return request.getRequestDispatcher("/view/admin/order_finished_list.jsp");
 	}
