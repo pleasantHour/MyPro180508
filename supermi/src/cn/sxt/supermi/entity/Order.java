@@ -20,7 +20,9 @@ public class Order {
     
     private Integer o_level;//优先级
     
-    private String o_btnTime;
+    private Date o_btnTime;//上次按提醒发货按钮的时间
+    
+    private boolean flag;//超过24小时再次提醒的标志
     
     private List<Detail> dtList;//订单详情的集合 即该订单下的多个商品
 
@@ -48,6 +50,23 @@ public class Order {
 		this.o_Num = o_Num;
 		this.o_Time = o_Time;
 	}
+	
+	
+	public Date getO_btnTime() {
+		return o_btnTime;
+	}
+
+	public void setO_btnTime(Date o_btnTime) {
+		this.o_btnTime = o_btnTime;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
 
 	public Integer getO_level() {
 		return o_level;
@@ -57,13 +76,9 @@ public class Order {
 		this.o_level = o_level;
 	}
 
-	public String getO_btnTime() {
-		return o_btnTime;
-	}
+	
 
-	public void setO_btnTime(String o_btnTime) {
-		this.o_btnTime = o_btnTime;
-	}
+	
 
 	public Integer getO_Id() {
 		return o_Id;

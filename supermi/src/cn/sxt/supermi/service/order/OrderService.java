@@ -60,4 +60,18 @@ public interface OrderService {
 	 * @return 当前指定状态订单集合
 	 */
 	public List<Order> getAllStateList(Integer o_State);
+	
+	/**
+	 * 修改订单表中的收货地址  订单id 收货地址
+	 * @param o  订单实体  内封装订单id和收货地址
+	 * @return 影响行数
+	 */
+	public int updateAddr(Order o);
+	
+	/**
+	 * 判断时间是否超过24小时 
+	 * @param o  订单实体  内封装上次按提醒发货按钮的时间
+	 * @return true 超过24小时     false 未超过24小时
+	 */
+	public boolean outTimeFlag(Order o);
 }

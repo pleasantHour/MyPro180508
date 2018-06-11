@@ -11,7 +11,7 @@
     <mapping path="/comment/tileLineList" exclue="true"/>
     <mapping path="/swagger-ui.html" exclue="true"/>
     <mapping path="/view/order/*" exclue="true"/>
-    <mapping path="/view/admin/*" exclue="true"/>
+    <mapping path="/OrderServlet" exclue="true"/>
     
     
     

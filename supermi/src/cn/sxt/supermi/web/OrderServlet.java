@@ -35,10 +35,13 @@ public class OrderServlet extends BaseServlet{
 		this.u_id = 1;
 		//查询订单中用户id所有订单
 		List<Order> list = oService.getAllList(u_id);
-		//遍历订单集合 将每个订单的订单详情再存入实体里
+		//遍历订单集合 将每个订单的订单详情、每个未发货订单的提醒发货按钮标志 存入实体里  
 		for(Order o : list){
 			int o_id = o.getO_Id();
 			o.setDtList(dService.getAllList(o_id));
+			if(o.getO_State() == 0){
+				o.setFlag(oService.outTimeFlag(o));
+			}
 		}
 		//把查询到的数据存入request域中
 		request.setAttribute("orderList", list);

@@ -1,5 +1,8 @@
 package cn.sxt.supermi.service.order.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import cn.sxt.supermi.dao.order.OrderDAO;
@@ -49,6 +52,40 @@ public class OrderServiceImpl implements OrderService {
 	public List<Order> getAllStateList(Integer o_State) {
 		// TODO Auto-generated method stub
 		return dao.getAllStateList(o_State);
+	}
+
+	@Override
+	public int updateAddr(Order o) {
+		// TODO Auto-generated method stub
+		return dao.updateAddr(o);
+	}
+
+	@Override
+	public boolean outTimeFlag(Order o) {
+		// TODO Auto-generated method stub
+		//标志
+		boolean flag = false;
+		//按钮时间不为空
+		if(o.getO_btnTime() !=null ||  !"".equals(o.getO_btnTime())){
+			//设置日期格式
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				//获取现在时间的毫秒  long型
+				long now = df.parse(df.format(new Date())).getTime();
+				//获取按钮时间的毫秒  long型
+				Date date = o.getO_btnTime();
+				long ago = df.parse(df.format(date)).getTime();
+				int hours = (int) ((now - ago)/(1000 * 60 * 60));
+
+				if(hours >= 24){
+					flag = true;
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return flag;
 	}
 
 }
