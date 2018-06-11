@@ -81,8 +81,6 @@ public class GoodsDAOImpl implements GoodsDAO {
 			throw new RuntimeException(e);
 		}
 		return count;
-		
 	}
-
 
 }

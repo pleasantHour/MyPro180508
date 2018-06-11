@@ -34,6 +34,4 @@ public interface GoodsDAO {
 	 * @return   int
 	 */
 	public int updateGoods(Goods g);
-	
-	
 }
