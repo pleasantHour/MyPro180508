@@ -118,7 +118,7 @@
                             	<a class="J_menuItem" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showOrderSentList">已发货列表</a>
                             </li>
                              <li>
-                            	<a class="J_menuItem" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showOrderFinishedList">已完成列表</a>
+                            	<a class="J_menuItem" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showOrderFinishedList">已收货列表</a>
                             </li>
                         </ul>
                     </li>
