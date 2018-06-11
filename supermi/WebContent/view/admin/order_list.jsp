@@ -78,40 +78,41 @@
 								</tr>
 							</thead>
                             <tbody>
-								<c:forEach items="${orderList}" var="order" varStatus="status">	
+								<c:forEach items="${orderMap}" var="order" varStatus="status">	
 									<tr class="gradeX">
-										 <td style="text-align: center;">${ status.index + 1}</td>
-			                             <td style="text-align: center;">${order.o_Id }</td>
-			                             <td style="text-align: center;">${order.o_Price }</td>
-			                             <td style="text-align: center;" id="${order.u_Id }">${order.u_Id }</td>
-			                             <td style="text-align: center;">${order.o_Addr }</td>
-			                             <c:if test="${order.o_State == 0}">
+										 <td style="text-align: center;">${status.index + 1}</td>
+			                             <td style="text-align: center;">${order.value.o_Id }</td>
+			                             <td style="text-align: center;">${order.value.o_Price }</td>
+			                             <td style="text-align: center;">${order.key.u_name }</td>
+			                             <td style="text-align: center;">${order.value.o_Addr }</td>
+			                             <c:if test="${order.value.o_State == 0}">
 			                             	<td style="text-align: center;">
 			                             		<span class="label label-primary">未发货</span>
 										 	</td>	
 			                             </c:if>
-			                             <c:if test="${order.o_State == 1}">
+			                             <c:if test="${order.value.o_State == 1}">
 			                             	<td style="text-align: center;">
 			                             		<span class="label label-primary">已收货</span>
 										 	</td>	
 			                             </c:if>
-			                             <c:if test="${order.o_State == 2}">
+			                             <c:if test="${order.value.o_State == 2}">
 			                             	<td style="text-align: center;">
 			                             		<span class="label label-primary">已取消 </span>
 			                             		<br/><br/>
-			                             		<c:if test="${order.o_Num==1 }">
+			                             		<c:if test="${order.value.o_Num==1 }">
 			                             			<span>用户取消</span>
 			                             		</c:if>
-			                             		<c:if test="${order.o_Num==2 }">
+			                             		<c:if test="${order.value.o_Num==2 }">
 			                             			<span>后台取消</span>
 			                             		</c:if>
 										 	</td>	
 			                             </c:if>
-			                             <td  style="text-align: center;" >${order.o_Time }</td>	
-			                             <c:if test="${order.o_State == 0}">
+			                             <td  style="text-align: center;" >${order.value.o_Time }</td>	
+			                             <c:if test="${order.value.o_State == 0}">
 			                             	<td style="text-align: center;">
-				                             	<a class="btn btn-white " title="查看详情" href="admin_dingdan_edit.action?dingdan.id=103">
+				                             	<a class="btn btn-white " title="查看详情" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showDetail&oid=${order.value.o_Id }">
 				                    				<i class="fa " aria-hidden="true">详情</i>
+				                    				<input type="hidden" name="orderId" value="${order.value.o_Id }"/>
 				                 				</a>
 				                 				<a class="btn btn-white " title="发货" href="admin_dingdan_edit.action?dingdan.id=103">
 				                    				<i class="fa " aria-hidden="true">发货</i>
@@ -121,10 +122,11 @@
 				                 				</a>
 				                 			</td>
 			                             </c:if>
-			                             <c:if test="${order.o_State != 0}">
+			                             <c:if test="${order.value.o_State != 0}">
 			                             	<td style="text-align: center;">
-				                             	<a class="btn btn-white " title="查看详情" href="admin_dingdan_edit.action?dingdan.id=103">
+				                             	<a class="btn btn-white " title="查看详情" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showDetail&oid=${order.value.o_Id }">
 				                    				<i class="fa fa-th-list" aria-hidden="true">详情</i>
+				                    				<input type="hidden" name="orderId" value="${order.value.o_Id }"/>
 				                 				</a>
 				                 			</td>
 			                             </c:if>
