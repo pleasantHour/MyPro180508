@@ -12,7 +12,8 @@
     <mapping path="/swagger-ui.html" exclue="true"/>
     <mapping path="/view/order/*" exclue="true"/>
     <mapping path="/OrderServlet" exclue="true"/>
-    
+    <mapping path="/view/admin/*" exclue="true"/>
+    <mapping path="/AdminOrderServlet" exclue="true"/>
     
     
   	<!-- 前端商城布局 -->
