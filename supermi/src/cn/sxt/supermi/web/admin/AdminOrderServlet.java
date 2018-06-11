@@ -1,5 +1,7 @@
 package cn.sxt.supermi.web.admin;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,10 +45,7 @@ public class AdminOrderServlet extends BaseServlet{
 			u = new User("jack"+i,"jackNiCk","jackpwd","15074452008","男","null"+i);
 			maps.put(u, order);
 		}
-		System.out.println("所有订单maps大小"+maps.size());
-		System.out.println("所有订单list大小"+orderList.size());
 		request.getSession().setAttribute("orderMap", maps);
-//		return return request.getRequestDispatcher("/view/admin/order_list.jsp");
 		return "/view/admin/order_list.jsp";
 	}
 	
@@ -67,10 +66,7 @@ public class AdminOrderServlet extends BaseServlet{
 			u = new User("jack"+i,"jackNiCk","jackpwd","15074452008","男","null"+i);
 			maps.put(u, order);
 		}
-		System.out.println("所有订单maps大小"+maps.size());
-		System.out.println("所有订单list大小"+orderList.size());
 		request.getSession().setAttribute("orderMap", maps);
-//		return request.getRequestDispatcher("/view/admin/order_list_unsend.jsp");
 		return "/view/admin/order_list_unsend.jsp";
 	}
 	
@@ -91,10 +87,7 @@ public class AdminOrderServlet extends BaseServlet{
 			u = new User("jack"+i,"jackNiCk","jackpwd","15074452008","男","null"+i);
 			maps.put(u, order);
 		}
-		System.out.println("所有订单maps大小"+maps.size());
-		System.out.println("所有订单list大小"+orderList.size());
 		request.getSession().setAttribute("orderMap", maps);
-//		return request.getRequestDispatcher("/view/admin/order_sent_list.jsp");
 		return "/view/admin/order_sent_list.jsp";
 	}
 	
@@ -115,11 +108,8 @@ public class AdminOrderServlet extends BaseServlet{
 			u = new User("jack"+i,"jackNiCk","jackpwd","15074452008","男","null"+i);
 			maps.put(u, order);
 		}
-		System.out.println("所有订单maps大小"+maps.size());
-		System.out.println("所有订单list大小"+orderList.size());
 		request.getSession().setAttribute("orderMap", maps);
 		return "/view/admin/order_finished_list.jsp";
-//		return request.getRequestDispatcher("/view/admin/order_finished_list.jsp");
 	}
 	
 	/**
@@ -132,6 +122,41 @@ public class AdminOrderServlet extends BaseServlet{
 		System.out.println(detailList.size());
 		request.getSession().setAttribute("detailList", detailList);
 		return "/view/admin/order_detail_list.jsp";
-//		return request.getRequestDispatcher("/view/admin/order_detail_list.jsp");
+	}
+	
+	/**
+	 * 订单发货
+	 */
+	public Object orderSend(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("oid为"+request.getParameter("oid"));
+		int orderId = Integer.parseInt(request.getParameter("oid"));
+		//修改订单状态为1[收货] 取消原因为0[没有取消原因，没有被取消，所以为0]
+		if(orderSer.updateState(orderId, 1, 0) > 0){
+			//判断订单发货后要跳转到的界面
+			if("l".equalsIgnoreCase(request.getParameter("u"))){
+				return showOrderList(request, response);
+			}else if("us".equalsIgnoreCase(request.getParameter("u"))){
+				return showOrderUnSendDList(request, response);
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 取消订单
+	 */
+	public Object orderCancle(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("oid为"+request.getParameter("oid"));
+		int orderId = Integer.parseInt(request.getParameter("oid"));
+		//修改订单状态为2[取消订单状态] 取消原因为2[后台取消]
+		if(orderSer.updateState(orderId, 2, 2) > 0){
+			//判断取消订单后要跳转到的界面
+			if("l".equalsIgnoreCase(request.getParameter("u"))){
+				return showOrderList(request, response);
+			}else if("us".equalsIgnoreCase(request.getParameter("u"))){
+				return showOrderUnSendDList(request, response);
+			}
+		}
+		return null;
 	}
 }
