@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,48 +23,79 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>订单管理</h5>
+                        <h5>待发货订单管理</h5>
                     </div>
                     <div class="ibox-content">
 
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
-                                	<th style="text-align: center;" >用户ID</th>
-                                	<th style="text-align: center;" >联系人</th>
-                                    <th style="text-align: center;" >送货地址</th>
-                                    <th style="text-align: center;" >联系电话</th>
-                                    <th style="text-align: center;" >订单编号</th>
-                                    <th style="text-align: center;" >支付状态</th>
-                                    <th style="text-align: center;" >创建时间</th>
-                                    <th style="text-align: center;">操作</th>
-                                </tr>
+									<th style="text-align: center;width:40px;" >序号</th>
+									<th style="text-align: center;width:90px;" >订单编号</th>
+<!-- 									<th style="text-align: center;width:90px;" >商品名称</th> -->
+									<th style="text-align: center;width:70px;" >总价</th>
+									<th style="text-align: center;width:110px;" >购买用户</th>
+<!-- 									<th style="text-align: center;width:110px;" >收货人</th> -->
+<!-- 									<th style="text-align: center;width:100px;">联系方式</th> -->
+									<th style="text-align: center;width:270px;">收货地址</th>
+									<th style="text-align: center;width:70px;">订单状态</th>
+									<th style="text-align: center;width:120px;">订单时间</th>
+									<th style="text-align: center;width:120px;">操作</th>
+								</tr>
                             </thead>
                             <tbody>
-                            	
-                            	<tr class="gradeX">
-                                    <td style="text-align: center;">10</td>
-                                    <td style="text-align: center;">赵s</td>
-                                    <td style="text-align: center;">山东省泰安市</td>
-                                    <td style="text-align: center;">4598897</td>
-                                    <td style="text-align: center;">order1059129631511243004812</td>
-                                    <td style="text-align: center;">
-                                    	
-                                    		<span class="label label-primary">已支付</span>
-                                    	
-                                    	
-									</td>
-                                    <td  style="text-align: center;" >2017-11-21</td>
-                                	 <td style="text-align: center;">
-                                    	<a class="btn btn-white btn-bitbucket" title="查看" href="admin_dingdan_edit.action?dingdan.id=103">
-                           					<i class="fa fa-th-list" aria-hidden="true"></i>
-                        				</a>
-                        				<input type="hidden" value="103"/>
-                        				<a class="btn btn-white btn-bitbucket delete" title="删除"  href="javascript:;">
-                           					 <i class="fa fa-trash-o" aria-hidden="true"></i>
-                        				</a>
-                        			</td>
-                                </tr>
+                            	<c:forEach items="${orderMap}" var="order" varStatus="status">	
+									<tr class="gradeX">
+										 <td style="text-align: center;">${status.index + 1}</td>
+			                             <td style="text-align: center;">${order.value.o_Id }</td>
+			                             <td style="text-align: center;">${order.value.o_Price }</td>
+			                             <td style="text-align: center;">${order.key.u_name }</td>
+			                             <td style="text-align: center;">${order.value.o_Addr }</td>
+			                             <c:if test="${order.value.o_State == 0}">
+			                             	<td style="text-align: center;">
+			                             		<span class="label label-primary">未发货</span>
+										 	</td>	
+			                             </c:if>
+			                             <c:if test="${order.value.o_State == 1}">
+			                             	<td style="text-align: center;">
+			                             		<span class="label label-primary">已收货</span>
+										 	</td>	
+			                             </c:if>
+			                             <c:if test="${order.value.o_State == 2}">
+			                             	<td style="text-align: center;">
+			                             		<span class="label label-primary">已取消 </span>
+			                             		<br/><br/>
+			                             		<c:if test="${order.value.o_Num==1 }">
+			                             			<span>用户取消</span>
+			                             		</c:if>
+			                             		<c:if test="${order.value.o_Num==2 }">
+			                             			<span>后台取消</span>
+			                             		</c:if>
+										 	</td>	
+			                             </c:if>
+			                             <td  style="text-align: center;" >${order.value.o_Time }</td>	
+			                             <c:if test="${order.value.o_State == 0}">
+			                             	<td style="text-align: center;">
+				                             	<a class="btn btn-white " title="查看详情" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showDetail&oid=${order.value.o_Id }">
+				                    				<i class="fa " aria-hidden="true">详情</i>
+				                 				</a>
+				                 				<a class="btn btn-white " title="发货" href="${pageContext.request.contextPath}/AdminOrderServlet?method=orderSend&oid=${order.value.o_Id }&u=us">
+				                    				<i class="fa " aria-hidden="true">发货</i>
+				                 				</a>
+				                 				<a class="btn btn-white " title="取消订单"  href="${pageContext.request.contextPath}/AdminOrderServlet?method=orderCancle&oid=${order.value.o_Id}&u=us">
+				                    				<i class="fa " aria-hidden="true">取消</i>
+				                 				</a>
+				                 			</td>
+			                             </c:if>
+			                             <c:if test="${order.value.o_State != 0}">
+			                             	<td style="text-align: center;">
+				                             	<a class="btn btn-white " title="查看详情" href="${pageContext.request.contextPath}/AdminOrderServlet?method=showDetail&oid=${order.value.o_Id }">
+				                    				<i class="fa fa-th-list" aria-hidden="true">详情</i>
+				                 				</a>
+				                 			</td>
+			                             </c:if>
+			                         </tr>
+								</c:forEach>
                             </tbody>
                         </table>
                     </div>
