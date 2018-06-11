@@ -20,6 +20,13 @@ public interface GoodsDAO {
 	 */
 	public List<Goods> getAllByID(Goods gid);
 	/**
+	 *通过商品名查询商品信息
+	 * @param gName
+	 * @return
+	 */
+	public List<Goods> getAllByName(String gName);
+	
+	/**
 	 *增加商品
 	 * @return   int
 	 */
@@ -34,4 +41,13 @@ public interface GoodsDAO {
 	 * @return   int
 	 */
 	public int updateGoods(Goods g);
+	/**
+	 * 更新商品销量
+	 * @param gid 商品id
+	 * @param num 要添加的商品销量(销量要增加的数量)
+	 * @return 影响的行数
+	 */
+	public int updateGoodsSalesByID(int gid,int num);
+
+	
 }

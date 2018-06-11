@@ -34,7 +34,7 @@ public class GoodsDAOImpl implements GoodsDAO {
 		List<Goods> goodsByid = null;
 		
 		try {
-			goodsByid = ComPoolUtil.getQueryRunner().query("select * from t_goods where g_Id=gid",new BeanListHandler<Goods>(Goods.class));
+			goodsByid = ComPoolUtil.getQueryRunner().query("select * from t_goods where g_Id=?",new BeanListHandler<Goods>(Goods.class),gid);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -70,7 +70,6 @@ public class GoodsDAOImpl implements GoodsDAO {
 	}
 	
 
-	
 	public int updateGoods(Goods g) {
 		int count = 0; //受影响的行
 		try {
@@ -81,6 +80,32 @@ public class GoodsDAOImpl implements GoodsDAO {
 			throw new RuntimeException(e);
 		}
 		return count;
+		
 	}
 
+	@Override
+	public int updateGoodsSalesByID(int gid, int num) {
+		int count = 0; //受影响的行
+		try {
+			count = ComPoolUtil.getQueryRunner().update(
+					"update t_goods set g_Sales= g_Sales+? where g_Id =?",
+					num,gid);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return count;
+	}
+
+
+	@Override
+	public List<Goods> getAllByName(String gName) {
+	List<Goods> goodsByName = null;
+		
+		try {
+			goodsByName = ComPoolUtil.getQueryRunner().query("select * from t_goods where g_Name like '%"+gName+"%'",new BeanListHandler<Goods>(Goods.class));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return goodsByName;
+	}
 }
