@@ -46,9 +46,9 @@
 			                             <td style="text-align: center;">${detail.d_Spes }</td>
 			                             <td style="text-align: center;">${detail.d_Num }</td>
 			                             <td style="text-align: center;">${detail.d_Price }</td>
-			                             <td style="text-align: center;">
-			                             	<img alt="图片有误" src="${pageContext.request.contextPath}/${detail.d_Addr}">
-			                             </td>
+<!-- 			                             <td style="text-align: center;"> -->
+<%-- 			                             	<img alt="图片有误" src="${pageContext.request.contextPath}/${detail.d_Addr}"> --%>
+<!-- 			                             </td> -->
 			                         </tr>
 								</c:forEach>
 							</tbody>
