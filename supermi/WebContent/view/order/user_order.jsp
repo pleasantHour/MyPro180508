@@ -42,11 +42,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <h1 class="title">我的订单<small>请谨防钓鱼链接或诈骗电话</small></h1>
         <div class="more clearfix">
           <ul class="filter-list J_orderType">
-            <li class="first ${type eq 0 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=list" data-type="0">全部订单</a></li>
-            <li class="${type eq 1 ? 'active':''}"><a id="J_unpaidTab" href="${pageContext.request.contextPath}/OrderServlet?method=listNotPay" data-type="1">待支付</a></li>
-            <li class="${type eq 2 ? 'active':''}"><a id="J_sendTab" href="${pageContext.request.contextPath}/OrderServlet?method=listNotSend" data-type="2">待收货</a></li>
-            <li class="${type eq 3 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=listReceive" data-type="3">已收货</a></li>
-            <li class="${type eq 4 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=listClose" data-type="3">已取消</a></li>
+            <li class="first ${type eq 4 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=list&type=${type}" data-type="0">全部订单</a></li>
+            <li class="${type eq 3 ? 'active':''}"><a id="J_unpaidTab" href="${pageContext.request.contextPath}/OrderServlet?method=listNotPay&type=${type}" data-type="1">待支付</a></li>
+            <li class="${type eq 0 ? 'active':''}"><a id="J_sendTab" href="${pageContext.request.contextPath}/OrderServlet?method=listNotSend&type=${type}" data-type="2">待收货</a></li>
+            <li class="${type eq 1 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=listReceive&type=${type}" data-type="3">已收货</a></li>
+            <li class="${type eq 2 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=listClose&type=${type}" data-type="4">已取消</a></li>
           </ul>
           <form id="J_orderSearchForm" class="search-form clearfix" action="" method="get">
             <label for="search" class="hide">站内搜索</label>
@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <div id="J_orderList">
           <ul class="order-list">
-            <c:forEach items="${orderList}" var="o">
+            <c:forEach items="${pageBean.tableList}" var="o">
               <c:if test="${o.o_State eq 3}">
                 <li class="uc-order-item uc-order-item-pay">
                   <div class="order-detail">

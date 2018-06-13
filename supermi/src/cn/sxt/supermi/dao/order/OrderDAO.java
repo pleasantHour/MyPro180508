@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.sxt.supermi.entity.ShopCart;
 import cn.sxt.supermi.entity.Order;
+import cn.sxt.supermi.entity.OrderPageRule;
 
 /**
  * 订单DAO接口
@@ -76,4 +77,38 @@ public interface OrderDAO {
 	 * @return 影响行数
 	 */
 	public int updateBtnTime(Integer o_id,Integer o_level);
+	
+	/**
+	 * 当前用户根据传来的条件分页  传空为查所有
+	 * @param opr  用户id 查询条件 订单类型
+	 * @param currentPage  当前页
+	 * @param maxResult  每页显示最大条数
+	 * @return 订单集合
+	 */
+	public List<Order> getAllByPage(OrderPageRule opr,Integer currentPage, Integer maxResult);
+	
+	/**
+	 * 查询数据的总条数
+	 * @param opr  用户id 查询条件 订单类型
+	 * @return 总条数
+	 */
+	public int getTotalCount(OrderPageRule opr);
+	
+	
+
+	/**
+	 * 通过订单ID获得订单信息
+	 * @param o_id 订单ID
+	 * @return 查询出的订单对象
+	 */
+	public Order getOrderByID(Integer o_id);
+
+	/**
+	 * 通过日期区间 查询订单时间在此区间内的订单集合
+	 * @param startTime 日期区间 开始时间
+	 * @param endTime   日期区间 结束时间
+	 * @return 订单时间在此区间内的订单集合
+	 */
+	public List<Order> getListByTimeRange(String startTime, String endTime);
+
 }

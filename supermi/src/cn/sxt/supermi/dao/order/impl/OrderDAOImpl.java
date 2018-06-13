@@ -3,11 +3,14 @@ package cn.sxt.supermi.dao.order.impl;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import cn.sxt.supermi.dao.order.OrderDAO;
 import cn.sxt.supermi.entity.Order;
+import cn.sxt.supermi.entity.OrderPageRule;
 import cn.sxt.supermi.entity.ShopCart;
 import cn.sxt.supermi.util.ComPoolUtil;
 
@@ -139,6 +142,76 @@ public class OrderDAOImpl implements OrderDAO {
 			e.printStackTrace();
 		}
 		return count;
+	}
+
+	@Override
+	public List<Order> getAllByPage(OrderPageRule opr,Integer currentPage, Integer maxResult) {
+		// TODO Auto-generated method stub
+		List<Order> list = null;
+		try {
+			StringBuilder sql = new StringBuilder("select * from t_order where u_id = ?");
+			//按订单ID查找  
+			if(!"".equals(opr.getSerch()) && opr.getSerch() != null){
+				sql.append(" and o_id = "+opr.getSerch());
+			}
+			//按订单类型查找
+			if((opr.getType() == 0) || (opr.getType() == 1) || (opr.getType() == 2) || (opr.getType() == 3)){
+				sql.append(" and o_State = "+opr.getType());
+			}
+			list = ComPoolUtil.getQueryRunner().query(sql+" ORDER BY o_time desc,o_id desc limit ?,?",
+					new BeanListHandler<Order>(Order.class),opr.getU_id(),currentPage,maxResult);
+			
+			System.out.println("++++++++++++++"+sql+" ORDER BY o_time desc,o_id desc limit ?,?");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int getTotalCount(OrderPageRule opr) {
+		// TODO Auto-generated method stub
+		//总条数
+		Long num = 0l;
+		try {
+			StringBuilder sql = new StringBuilder("select count(*) from t_order where u_id = ?");
+			//按订单ID查找  
+			if(!"".equals(opr.getSerch()) && opr.getSerch() != null){
+				sql.append(" and o_id = "+opr.getSerch());
+			}
+			//按订单类型查找
+			if(opr.getType() == 0 || opr.getType() == 1 || opr.getType() == 2 || opr.getType() == 3){
+				sql.append(" and o_State = "+opr.getType());
+			}
+			num = ComPoolUtil.getQueryRunner().query(sql+"", new ScalarHandler<Long>(), opr.getU_id());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return num.intValue();
+	}
+	
+	@Override
+	public Order getOrderByID(Integer o_id) {
+		Order or = new Order();
+		try {
+			or = ComPoolUtil.getQueryRunner().query("select * from t_order where o_id = ?",
+					new BeanHandler<Order>(Order.class),o_id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return or;
+	}
+
+	@Override
+	public List<Order> getListByTimeRange(String startTime, String endTime) {
+		List<Order> list = null;
+		try {
+			list = ComPoolUtil.getQueryRunner().query("select * from t_order where o_time>=? and o_time <= ?",
+					new BeanListHandler<Order>(Order.class),startTime,endTime);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	

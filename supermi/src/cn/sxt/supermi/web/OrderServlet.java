@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.sxt.supermi.entity.Order;
+import cn.sxt.supermi.entity.OrderPageRule;
+import cn.sxt.supermi.entity.PageBean;
 import cn.sxt.supermi.entity.ShopCart;
 import cn.sxt.supermi.service.detail.DetailService;
 import cn.sxt.supermi.service.detail.impl.DetailServiceImpl;
@@ -34,7 +36,22 @@ public class OrderServlet extends BaseServlet{
 		//假设用户id是1
 		this.u_id = 1;
 		//查询订单中用户id所有订单
-		List<Order> list = oService.getAllList(u_id);
+		//List<Order> list = oService.getAllList(u_id);
+		
+		//当前页
+		String page = request.getParameter("page");
+		if("".equals(page) || page == null){
+			//默认1
+			page = "2";
+		}
+		//订单查询参数实体
+		OrderPageRule opr = new OrderPageRule(this.u_id,"",4);
+		//页面实体
+		PageBean<Order> pb = new PageBean<Order>();
+		//设置页面实体
+		oService.setPageBean(pb, opr, page);
+		//订单表集合
+		List<Order> list = pb.getTableList();
 		//遍历订单集合 将每个订单的订单详情、每个未发货订单的提醒发货按钮标志 存入实体里  
 		for(Order o : list){
 			int o_id = o.getO_Id();
@@ -44,9 +61,10 @@ public class OrderServlet extends BaseServlet{
 			}
 		}
 		//把查询到的数据存入request域中
-		request.setAttribute("orderList", list);
+		//request.setAttribute("orderList", list);
+		request.setAttribute("pageBean", pb);
 		//将查询类型设置为 全部订单
-		request.setAttribute("type", 0);
+		request.setAttribute("type", 4);
 		// 返回一个转发对象，交给BaseServlet判断
 		return request.getRequestDispatcher("/view/order/user_order.jsp");
 	}
@@ -69,7 +87,7 @@ public class OrderServlet extends BaseServlet{
 		//把查询到的数据存入request域中
 		request.setAttribute("orderList", list);
 		//将查询类型设置为 待支付
-		request.setAttribute("type", 1);
+		request.setAttribute("type", 3);
 		// 返回一个转发对象，交给BaseServlet判断
 		return request.getRequestDispatcher("/view/order/user_order.jsp");
 	}
@@ -93,7 +111,7 @@ public class OrderServlet extends BaseServlet{
 		//把查询到的数据存入request域中
 		request.setAttribute("orderList", list);
 		//将查询类型设置为 待收货
-		request.setAttribute("type", 2);
+		request.setAttribute("type", 0);
 		// 返回一个转发对象，交给BaseServlet判断
 		return request.getRequestDispatcher("/view/order/user_order.jsp");
 	}
@@ -106,7 +124,7 @@ public class OrderServlet extends BaseServlet{
 	 */
 	public Object listReceive(HttpServletRequest request, HttpServletResponse response){
 		
-		//查询订单中未发货的订单
+		//查询订单中收货的订单
 		List<Order> list = oService.getStateList(u_id, 1);
 		//遍历订单集合 将每个订单的订单详情再存入实体里
 		for(Order o : list){
@@ -115,8 +133,8 @@ public class OrderServlet extends BaseServlet{
 		}
 		//把查询到的数据存入request域中
 		request.setAttribute("orderList", list);
-		//将查询类型设置为 待收货
-		request.setAttribute("type", 3);
+		//将查询类型设置为 收货
+		request.setAttribute("type", 1);
 		// 返回一个转发对象，交给BaseServlet判断
 		return request.getRequestDispatcher("/view/order/user_order.jsp");
 	}
@@ -139,7 +157,7 @@ public class OrderServlet extends BaseServlet{
 		//把查询到的数据存入request域中
 		request.setAttribute("orderList", list);
 		//将查询类型设置为 已取消
-		request.setAttribute("type", 4);
+		request.setAttribute("type", 2);
 		// 返回一个转发对象，交给BaseServlet判断
 		return request.getRequestDispatcher("/view/order/user_order.jsp");
 	}
@@ -160,9 +178,9 @@ public class OrderServlet extends BaseServlet{
 		list(request, response);
 		//判断刷新页面时查看的订单状态
 		String method = "";
-		if(type == 1){
+		if(type == 3){
 			method = "listNotPay";
-		}else if(type == 2){
+		}else if(type == 0){
 			method = "listNotSend";
 		}else{
 			method = "list";
@@ -187,9 +205,9 @@ public class OrderServlet extends BaseServlet{
 		oService.updateBtnTime(o_id, o_level);
 		//判断刷新页面时查看的订单状态
 		String method = "";
-		if(type == 0){
+		if(type == 4){
 			method = "list";
-		}else if(type == 2){
+		}else if(type == 0){
 			method = "listNotSend";
 		}else{
 			method = "list";
