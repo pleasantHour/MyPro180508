@@ -42,11 +42,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <h1 class="title">我的订单<small>请谨防钓鱼链接或诈骗电话</small></h1>
         <div class="more clearfix">
           <ul class="filter-list J_orderType">
-            <li class="first ${type eq 4 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=list&type=${type}" data-type="0">全部订单</a></li>
-            <li class="${type eq 3 ? 'active':''}"><a id="J_unpaidTab" href="${pageContext.request.contextPath}/OrderServlet?method=listNotPay&type=${type}" data-type="1">待支付</a></li>
-            <li class="${type eq 0 ? 'active':''}"><a id="J_sendTab" href="${pageContext.request.contextPath}/OrderServlet?method=listNotSend&type=${type}" data-type="2">待收货</a></li>
-            <li class="${type eq 1 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=listReceive&type=${type}" data-type="3">已收货</a></li>
-            <li class="${type eq 2 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=listClose&type=${type}" data-type="4">已取消</a></li>
+            <li class="first ${type eq 4 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&type=4" data-type="0">全部订单</a></li>
+            <li class="${type eq 3 ? 'active':''}"><a id="J_unpaidTab" href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&type=3" data-type="1">待支付</a></li>
+            <li class="${type eq 0 ? 'active':''}"><a id="J_sendTab" href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&type=0" data-type="2">待收货</a></li>
+            <li class="${type eq 1 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&type=1" data-type="3">已收货</a></li>
+            <li class="${type eq 2 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&type=2" data-type="4">已取消</a></li>
           </ul>
           <form id="J_orderSearchForm" class="search-form clearfix" action="" method="get">
             <label for="search" class="hide">站内搜索</label>
@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <div class="order-detail">
                     <div class="order-summary">
                       <div class="order-status">待支付</div>
-                      <p class="order-desc J_deliverDesc"> 我们将尽快为您发货 </p>
+                      <p class="order-desc J_deliverDesc"> 请付款，我们将尽快为您发货 </p>
                     </div>
                     <table class="order-detail-table">
                       <thead>
@@ -256,9 +256,50 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </c:forEach>
           </ul>
         </div>
-        <div id="J_orderListPages">
-          <c:if test="${pageInfo.total gt pageInfo.limit and not empty orderVOs}">
-            <div id="pager" data-pager-href="${ctx}/uc/order/list?type=${type}&search=${search}&page=" data-pager-totalPage="${pageInfo.totalPage}" data-pager-nowpage="${pageInfo.current}" data-pager-total="${pageInfo.total}"></div>
+        
+        <!-- 分页按钮样式  -->
+        <style type="text/css">
+        	.pagination{ text-align: center;font-size: 12px;padding: 10px 0;display:inline-block}
+.pagination a,.pagination span{display: inline-block;padding: 0 10px;height: 28px;line-height: 28px;border: 1px solid #ddd;border-radius: 4px;text-decoration: none;color: #999;cursor: pointer;  margin-right:5px;}
+.pagination a:hover:not(.disabled):not(.current),.pagination span:hover:not(.disabled):not(.current){color:#f04848}
+.pagination a.disabled,.pagination span.disabled{color: #bfbfbf;background: #f5f5f5;cursor: no-drop;border: 1px solid #ddd;}
+.pagination a.current,.pagination span.current{color: #fff;background: #f04848;border: 1px solid #f04848;}
+        </style>
+        
+        <div >
+          <c:if test="${pageBean.totalPage gt pageBean.currentPage and not empty pageBean.tableList}">
+            <div class="pagination" align="center" style="padding-left:20%;">
+            	<c:choose>
+   					<c:when test="${pageBean.currentPage == 0}">
+   						 <a href="javascript::"  class="disabled"  title="首页">首页</a>
+			    		 <a href="javascript::"  class="disabled"  title="上一页">上一页</a>
+					</c:when>
+					<c:otherwise>
+						 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=0&type=${type}"  title="首页">首页</a>
+			    		 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${pageBean.currentPage-1}&type=${type}"  title="上一页">上一页</a>
+					</c:otherwise> 
+				</c:choose>
+				<c:forEach varStatus="idx" begin="1" end="${pageBean.totalPage}">
+					<c:choose>
+	   					<c:when test="${idx.index == pageBean.currentPage + 1}">
+	   						<a href="javascript::" class="current">${idx.index}</a>
+						</c:when>
+						<c:otherwise>
+							 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${idx.index-1}&type=${type}" >${idx.index}</a>
+						</c:otherwise> 
+					</c:choose>
+				</c:forEach>    
+			   <c:choose>
+   					<c:when test="${pageBean.currentPage == pageBean.totalPage - 1}">
+   						 <a href="javascript::" class="disabled"  title="下一页">下一页</a>
+			    		 <a href="javascript::" class="disabled"  title="尾页">尾页</a>
+					</c:when>
+					<c:otherwise>
+						 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${pageBean.currentPage+1}&type=${type}"  title="下一页">下一页</a>
+			    		 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${pageBean.totalPage-1}&type=${type}"  title="尾页">尾页</a>
+					</c:otherwise> 
+				</c:choose>
+			</div>
           </c:if>
         </div>
       </div>

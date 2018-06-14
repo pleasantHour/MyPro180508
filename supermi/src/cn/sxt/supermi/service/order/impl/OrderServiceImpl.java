@@ -109,15 +109,15 @@ public class OrderServiceImpl implements OrderService {
 			pb.setCurrentPage(Integer.parseInt(page));//设置当前页
 		}
 		
-		//当前页小于1
+		//当前页小于1页
 		if(pb.getCurrentPage() < 0){
 			pb.setCurrentPage(0);//默认第一页
 		}
 		
 		//如果当前页大于总页数， 默认最后一页
-		if(pb.getCurrentPage() > totalPage) pb.setCurrentPage(totalPage);
+		if(pb.getCurrentPage() >= totalPage) pb.setCurrentPage(totalPage-1);
 		//查询指定用户指定订单号指定状态的订单信息
-		pb.setTableList(dao.getAllByPage(opr, pb.getCurrentPage(), pb.getMaxResult()));
+		pb.setTableList(dao.getAllByPage(opr, pb.getCurrentPage()*pb.getMaxResult(), pb.getMaxResult()));
 	}
 
 	@Override

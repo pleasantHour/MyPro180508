@@ -161,7 +161,7 @@ public class OrderDAOImpl implements OrderDAO {
 			list = ComPoolUtil.getQueryRunner().query(sql+" ORDER BY o_time desc,o_id desc limit ?,?",
 					new BeanListHandler<Order>(Order.class),opr.getU_id(),currentPage,maxResult);
 			
-			System.out.println("++++++++++++++"+sql+" ORDER BY o_time desc,o_id desc limit ?,?");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
