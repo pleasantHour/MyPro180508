@@ -22,19 +22,77 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- 引入  bootstrap-->
     <script src="${pageContext.request.contextPath}/style/bootstrap-3.3.7-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/style/bootstrap-3.3.7-dist/css/bootstrap.css" />
+    <!-- 引入  商场的样式-->
     
     <link rel="stylesheet" href="${pageContext.request.contextPath}/view/order/css/base.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/view/order/css/main.css" />
- 
+    
+    <!-- 引入  弹出框的样式-->
+ 	<link rel="stylesheet" href="${pageContext.request.contextPath}/view/order/css/common.css"/>
+ 	
+ 	<c:set var="payid" />
+ 	<script type="text/javascript">
+		var w,h,className;
+		function getSrceenWH(){
+			w = $(window).width();
+			h = $(window).height();
+			$('#dialogBg').width(w).height(h);
+		}
+		
+		function setOid(o){
+
+			$("#pay1").attr("href","${pageContext.request.contextPath}/OrderServlet?method=pay&oid="+o+"&type=${type}");
+			$("#pay2").attr("href","${pageContext.request.contextPath}/OrderServlet?method=pay&oid="+o+"&type=${type}");
+		}
+		
+		window.onresize = function(){  
+			getSrceenWH();
+		}  
+		$(window).resize();  
+		
+		$(function(){
+			getSrceenWH();
+			
+			//显示弹框
+			$('.box a').click(function(){
+				className = $(this).attr('class');
+				$('#dialogBg').fadeIn(50);
+				$('#dialog').removeAttr('class').addClass('animated '+className+'').fadeIn();
+			});
+			
+			//关闭弹窗
+			$('.claseDialogBtn').click(function(){
+				$('#dialogBg').fadeOut(50,function(){
+					$('#dialog').addClass('bounceOutUp').fadeOut();
+				});
+			});	
+		});
+		
+		
+	</script>
   </head>
-  
-  <script type="text/javascript"> 
-  		
-  </script> 
-	
-  
   <body>
-  
+	   <div id="wrapper">
+			<div class="box">
+				<div id="dialogBg"></div>
+				<div id="dialog" class="animated">
+					<div class="dialogTop">
+						<a href="javascript:;" class="claseDialogBtn">关闭</a>
+					</div>
+						<ul class="editInfos">
+					        <div class="payment-box ">
+					          <div class="payment-body">
+					            <ul class="clearfix payment-list J_paymentList J_linksign-customize">
+					              <li ><a id="pay1" href="${pageContext.request.contextPath}/OrderServlet?method=pay&oid=${o.o_Id}&type=${type}"><img src="//c1.mifile.cn/f/i/15/pay/wechat0715.jpg" alt="微信支付" style="margin-left: 0;"/></a></li>
+					              <li class="J_bank"><a id="pay2" href="javascript:;"><img src="//c1.mifile.cn/f/i/15/pay/alipay-0718-1.png" alt="支付宝" style="margin-left: 0;"/></a></li>
+					            </ul>
+					          </div>
+					         </div>
+						</ul>
+				</div>
+			</div>
+		</div>
+		
    <div class="span16">
   <div class="uc-box uc-main-box">
     <div class="uc-content-box order-list-box">
@@ -84,7 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<c:set value="${them[2]}" var="addr"></c:set>
                           	  <fmt:parseDate value="${o.o_Time}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate"></fmt:parseDate>
                               <fmt:formatDate value="${receiveDate}" pattern="yyyy-MM-dd HH:mm:ss" />
-                              <span class="sep">|</span>姓名：${name}<span class="sep">|</span>订单号：${o.o_Id} <span class="sep">|</span>在线支付</p>
+                              <span class="sep">|</span>姓名：${name}<span class="sep">|</span>订单号：${o.o_Id}<span class="sep">|</span>在线支付</p>
                               <p class="caption-info">收货地址:	${addr}	<span class="sep">|</span>${phone}</p>
                           </th>
                           <th class="col-sub"> <p class="caption-price">订单金额：<span class="num">${o.o_Price}</span>元</p>
@@ -104,7 +162,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                               </c:forEach>
                             </ul></td>
                           <td class="order-actions">
-                          <a class="btn btn-small btn-primary" href="#" target="_blank">立即支付</a>
+                          <div class="box">
+                          	<a  class="btn btn-small btn-primary bounceIn" onclick="setOid(${o.o_Id})" >立即支付</a>	
+                          </div>
                           <a class="btn btn-small btn-primary" href="${pageContext.request.contextPath}/OrderServlet?method=cancelList&oid=${o.o_Id}&type=${type}">取消订单</a>
                           </td>
                         </tr>
@@ -117,7 +177,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li class="uc-order-item uc-order-item-shipping">
                   <div class="order-detail">
                     <div class="order-summary">
-                      <div class="order-status">待出库</div>
+                      <div class="order-status">待收货</div>
                       <p class="order-desc J_deliverDesc"> 我们将尽快为您发货 </p>
                     </div>
                     <table class="order-detail-table">
@@ -214,7 +274,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li class="uc-order-item uc-order-item-finish">
                   <div class="order-detail">
                     <div class="order-summary">
-                      <div class="order-status">已关闭&nbsp&nbsp&nbsp<span style="color:red;font-size:25px">${o.o_Num eq 1 ? "用户关闭":"后台关闭"}</span></div>
+                      <div class="order-status">已取消&nbsp&nbsp&nbsp<span style="color:red;font-size:25px">${o.o_Num eq 1 ? "用户取消":"后台取消"}</span></div>
                     </div>
                     <table class="order-detail-table">
                       <thead>

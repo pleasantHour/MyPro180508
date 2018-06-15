@@ -110,6 +110,22 @@ public class OrderServlet extends BaseServlet{
 	}
 	
 	/**
+	 * 取消当前用户订单 用户取消
+	 * 取得页面传的 订单ID 订单类型
+	 * @param request
+	 * @param response
+	 * @return 转发对象，交给BaseServlet判断
+	 */
+	public Object pay(HttpServletRequest request, HttpServletResponse response){
+		//取得页面传的 订单ID  当前订单类型
+		int oid = Integer.parseInt(request.getParameter("oid"));
+		//修改当前用户订单状态为取消 取消原因  用户取消
+		oService.updateState(oid, 0, 1);
+		// 返回一个转发对象，交给BaseServlet判断
+		return this.orderPageSet(request, response);
+	}
+	
+	/**
 	 *对页面传来的数据传给成员 并设置页面实体 决定查询哪种状态的订单
 	 *page type serch   没有数据就不传
 	 */
