@@ -48,10 +48,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li class="${type eq 1 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&type=1" data-type="3">已收货</a></li>
             <li class="${type eq 2 ? 'active':''}"><a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&type=2" data-type="4">已取消</a></li>
           </ul>
-          <form id="J_orderSearchForm" class="search-form clearfix" action="" method="get">
+          <form id="J_orderSearchForm" class="search-form clearfix" accept-charset="utf-8" action="${pageContext.request.contextPath}/OrderServlet" method="get">
             <label for="search" class="hide">站内搜索</label>
-            <input class="search-text" type="search" id="J_orderSearchKeywords" name="search" value="${search}" autocomplete="off" placeholder="输入商品名称、商品编号、订单号" />
-            <input type="hidden" name="type" value="4" />
+            <input class="search-text" type="search" id="J_orderSearchKeywords" name="serch" value="${serch}" autocomplete="off" placeholder="${serch == null ? serch:'输入商品名称、订单号' }" />
+            <input type="hidden" name="type" value="${type}" />
+            <input type="hidden" name="method" value="orderPageSet" />
             <input type="submit" class="search-btn iconfont" value="搜索" />
           </form>
         </div>
@@ -275,8 +276,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		 <a href="javascript::"  class="disabled"  title="上一页">上一页</a>
 					</c:when>
 					<c:otherwise>
-						 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=0&type=${type}"  title="首页">首页</a>
-			    		 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${pageBean.currentPage-1}&type=${type}"  title="上一页">上一页</a>
+						 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=0&type=${type}&serch=${serch}"  title="首页">首页</a>
+			    		 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${pageBean.currentPage-1}&type=${type}&serch=${serch}"  title="上一页">上一页</a>
 					</c:otherwise> 
 				</c:choose>
 				<c:forEach varStatus="idx" begin="1" end="${pageBean.totalPage}">
@@ -285,7 +286,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   						<a href="javascript::" class="current">${idx.index}</a>
 						</c:when>
 						<c:otherwise>
-							 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${idx.index-1}&type=${type}" >${idx.index}</a>
+							 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${idx.index-1}&type=${type}&serch=${serch}" >${idx.index}</a>
 						</c:otherwise> 
 					</c:choose>
 				</c:forEach>    
@@ -295,8 +296,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		 <a href="javascript::" class="disabled"  title="尾页">尾页</a>
 					</c:when>
 					<c:otherwise>
-						 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${pageBean.currentPage+1}&type=${type}"  title="下一页">下一页</a>
-			    		 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${pageBean.totalPage-1}&type=${type}"  title="尾页">尾页</a>
+						 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${pageBean.currentPage+1}&type=${type}&serch=${serch}"  title="下一页">下一页</a>
+			    		 <a href="${pageContext.request.contextPath}/OrderServlet?method=orderPageSet&page=${pageBean.totalPage-1}&type=${type}&serch=${serch}"  title="尾页">尾页</a>
 					</c:otherwise> 
 				</c:choose>
 			</div>

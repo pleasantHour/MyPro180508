@@ -1,5 +1,6 @@
 package cn.sxt.supermi.web;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +57,9 @@ public class OrderServlet extends BaseServlet{
 		//把查询到的数据存入request域中
 		//request.setAttribute("orderList", list);
 		request.setAttribute("pageBean", pb);
+		//传查询内容
+		request.setAttribute("serch", serch);
+		serch = null;
 		//将查询类型设置为 全部订单
 		request.setAttribute("type", type);
 		// 返回一个转发对象，交给BaseServlet判断
@@ -112,6 +116,14 @@ public class OrderServlet extends BaseServlet{
 	public Object orderPageSet(HttpServletRequest request, HttpServletResponse response) {
 		//获取Session传来的用户ID  并存在成员u_id中
 		//this.u_id = (int)request.getSession().getAttribute("uid");
+		try {
+			//解决中文乱码
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//假设用户id是1
 		this.u_id = 1;
 		//当前页
@@ -122,7 +134,15 @@ public class OrderServlet extends BaseServlet{
 			type = Integer.parseInt(t);
 		}
 		//查询内容
-		serch = request.getParameter("serch");
+		try {
+			String s = request.getParameter("serch");
+			if(s != null){
+				serch = new String(s.getBytes("iso-8859-1"),"utf-8");
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if("".equals(page) || page == null){
 			//默认0  第一页
 			page = "0";

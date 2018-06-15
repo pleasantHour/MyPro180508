@@ -2,6 +2,7 @@ package cn.sxt.supermi.dao.order.impl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -150,9 +151,17 @@ public class OrderDAOImpl implements OrderDAO {
 		List<Order> list = null;
 		try {
 			StringBuilder sql = new StringBuilder("select * from t_order where u_id = ?");
-			//按订单ID查找  
+			//查询内容不为空  
 			if(!"".equals(opr.getSerch()) && opr.getSerch() != null){
-				sql.append(" and o_id = "+opr.getSerch());
+				//判断字符串是否是数字  是整数返回true,否则返回false
+				Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+				if(!pattern.matcher(opr.getSerch()).matches()){
+		    	   //非数字
+					sql.append(" and o_Id in(select DISTINCT o_Id from t_detail where d_Spes like '%"+opr.getSerch()+"%')");
+		       }else{
+		    	   sql.append(" and o_id = "+opr.getSerch());
+		       }
+				
 			}
 			//按订单类型查找
 			if((opr.getType() == 0) || (opr.getType() == 1) || (opr.getType() == 2) || (opr.getType() == 3)){
@@ -175,9 +184,17 @@ public class OrderDAOImpl implements OrderDAO {
 		Long num = 0l;
 		try {
 			StringBuilder sql = new StringBuilder("select count(*) from t_order where u_id = ?");
-			//按订单ID查找  
+			//查询内容不为空  
 			if(!"".equals(opr.getSerch()) && opr.getSerch() != null){
-				sql.append(" and o_id = "+opr.getSerch());
+				//判断字符串是否是数字  是整数返回true,否则返回false
+				Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+				if(!pattern.matcher(opr.getSerch()).matches()){
+		    	   //非数字
+					sql.append(" and o_Id in(select DISTINCT o_Id from t_detail where d_Spes like '%"+opr.getSerch()+"%')");
+		       }else{
+		    	   sql.append(" and o_id = "+opr.getSerch());
+		       }
+				
 			}
 			//按订单类型查找
 			if(opr.getType() == 0 || opr.getType() == 1 || opr.getType() == 2 || opr.getType() == 3){
