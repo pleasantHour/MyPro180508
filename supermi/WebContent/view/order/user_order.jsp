@@ -154,8 +154,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <td class="order-items"><ul class="goods-list">
                               <c:forEach items="${o.dtList}" var="d">
                                 <li>
-                                  <div class="figure figure-thumb"> <a href="#" target="_blank"> <img src="${pageContext.request.contextPath}/${d.d_Addr}" width="80" height="80" alt="测试一&nbsp;&nbsp;测试类别一" title="测试一&nbsp;&nbsp;测试类别一"> </a> </div>
-                                  <p class="name"> <a target="_blank" href="#">
+                                  <div class="figure figure-thumb"> <a href="${pageContext.request.contextPath}/ListServlet?method=detail&gid=${d.g_Id}" target="_blank"> <img src="${pageContext.request.contextPath}/${d.d_Addr}" width="80" height="80" alt="测试一&nbsp;&nbsp;测试类别一" title="测试一&nbsp;&nbsp;测试类别一"> </a> </div>
+                                  <p class="name"> <a target="_blank" href="${pageContext.request.contextPath}/ListServlet?method=detail&gid=${d.g_Id}">
                                       ${d.d_Spes}</a> </p>
                                   <p class="price">${d.d_Price}&nbsp;&nbsp;元 × &nbsp;&nbsp;${d.d_Num} </p>
                                 </li>
@@ -203,8 +203,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <td class="order-items"><ul class="goods-list">
                               <c:forEach items="${o.dtList}" var="d">
                                 <li>
-                                  <div class="figure figure-thumb"> <a href="#" target="_blank"> <img src="${pageContext.request.contextPath}/${d.d_Addr}"" width="80" height="80" alt="测试一&nbsp;&nbsp;测试类别一" title="测试一&nbsp;&nbsp;测试类别一"> </a> </div>
-                                  <p class="name"> <a target="_blank" href="#">${d.d_Spes}</a> </p>
+                                  <div class="figure figure-thumb"> <a href="${pageContext.request.contextPath}/ListServlet?method=detail&gid=${d.g_Id}" target="_blank"> <img src="${pageContext.request.contextPath}/${d.d_Addr}"" width="80" height="80" alt="测试一&nbsp;&nbsp;测试类别一" title="测试一&nbsp;&nbsp;测试类别一"> </a> </div>
+                                  <p class="name"> <a target="_blank" href="${pageContext.request.contextPath}/ListServlet?method=detail&gid=${d.g_Id}">${d.d_Spes}</a> </p>
                                   <p class="price">${d.d_Price}元 × ${d.d_Num}</p>
                                 </li>
                               </c:forEach>
@@ -257,8 +257,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <td class="order-items"><ul class="goods-list">
                               <c:forEach items="${o.dtList}" var="d">
                                 <li>
-                                  <div class="figure figure-thumb"> <a href="#" target="_blank"> <img src="${pageContext.request.contextPath}/${d.d_Addr}" width="80" height="80" alt="测试一&nbsp;&nbsp;测试类别一" title="测试一&nbsp;&nbsp;测试类别一"> </a> </div>
-                                  <p class="name"> <a target="_blank" href="#">${d.d_Spes}</a> </p>
+                                  <div class="figure figure-thumb"> <a href="${pageContext.request.contextPath}/ListServlet?method=detail&gid=${d.g_Id}" target="_blank"> <img src="${pageContext.request.contextPath}/${d.d_Addr}" width="80" height="80" alt="测试一&nbsp;&nbsp;测试类别一" title="测试一&nbsp;&nbsp;测试类别一"> </a> </div>
+                                  <p class="name"> <a target="_blank" href="${pageContext.request.contextPath}/ListServlet?method=detail&gid=${d.g_Id}">${d.d_Spes}</a> </p>
                                   <p class="price">${d.d_Price}元 × ${d.d_Num}</p>
                                 </li>
                               </c:forEach>
@@ -299,8 +299,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <td class="order-items"><ul class="goods-list">
                               <c:forEach items="${o.dtList}" var="d">
                                 <li>
-                                 <div class="figure figure-thumb"> <a href="#" target="_blank"> <img src="${pageContext.request.contextPath}/${d.d_Addr}" width="80" height="80" alt="测试一&nbsp;&nbsp;测试类别一" title="测试一&nbsp;&nbsp;测试类别一"> </a> </div>
-                                  <p class="name"> <a target="_blank" href="#">${d.d_Spes}</a> </p>
+                                 <div class="figure figure-thumb"> <a href="${pageContext.request.contextPath}/ListServlet?method=detail&gid=${d.g_Id}" target="_blank"> <img src="${pageContext.request.contextPath}/${d.d_Addr}" width="80" height="80" alt="测试一&nbsp;&nbsp;测试类别一" title="测试一&nbsp;&nbsp;测试类别一"> </a> </div>
+                                  <p class="name"> <a target="_blank" href="${pageContext.request.contextPath}/ListServlet?method=detail&gid=${d.g_Id}">${d.d_Spes}</a> </p>
                                   <p class="price">${d.d_Price}元 × ${d.d_Num}</p>
                                 </li>
                               </c:forEach>
