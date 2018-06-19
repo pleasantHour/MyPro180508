@@ -110,5 +110,12 @@ public interface OrderDAO {
 	 * @return 订单时间在此区间内的订单集合
 	 */
 	public List<Order> getListByTimeRange(String startTime, String endTime);
+	
+	/**
+	 * 获得指定用户下的某订单状态的总数  如1用户的未支付订单的数量
+	 * @param t  订单实体   内封装 用户ID 订单状态
+	 * @return 查询到的记录数
+	 */
+	public int getStateCount(Order t);
 
 }

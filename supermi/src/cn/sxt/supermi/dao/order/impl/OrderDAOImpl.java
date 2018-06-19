@@ -231,6 +231,19 @@ public class OrderDAOImpl implements OrderDAO {
 		return list;
 	}
 
+	@Override
+	public int getStateCount(Order t) {
+		// TODO Auto-generated method stub
+		//总条数
+		Long num = 0l;
+		try {
+			num = ComPoolUtil.getQueryRunner().query("select count(*) from t_order where u_Id = ? and o_State = ?", new ScalarHandler<Long>(),t.getU_Id(),t.getO_State());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return num.intValue();
+	}
+
 	
 
 }

@@ -142,4 +142,10 @@ public class OrderServiceImpl implements OrderService {
 		return dao.getListByTimeRange(startTime, endTime);
 	}
 
+	@Override
+	public int getStateCount(Order t) {
+		// TODO Auto-generated method stub
+		return dao.getStateCount(t);
+	}
+
 }

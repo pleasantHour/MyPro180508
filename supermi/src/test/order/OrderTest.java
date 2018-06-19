@@ -75,13 +75,23 @@ public class OrderTest {
 //		}
 		
 		
+//		@Test
+//		public void getTotalCount() {
+//			int l = 0;
+//			OrderPageRule opr = new OrderPageRule(1,"",6);
+//			l = d.getTotalCount(opr);
+//			System.out.println(l);
+//			
+//		}
+		
 		@Test
-		public void getTotalCount() {
+		public void getStateCount() {
 			int l = 0;
-			OrderPageRule opr = new OrderPageRule(1,"",6);
-			l = d.getTotalCount(opr);
+			Order o = new Order();
+			o.setU_Id(1);
+			o.setO_State(2);
+			l = d.getStateCount(o);
 			System.out.println(l);
-			
 		}
 	
 
